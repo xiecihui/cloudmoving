@@ -1,0 +1,15 @@
+{
+    "total":5,
+    "rows":[
+    {"nums":1,"order":"2017101001","name":"张三","identity":"342426********0001","overdue":3,"balance":"1,300.00","rDate":"2017-12-30","rType":"","account":"是"},
+    {"nums":2,"order":"2017101002","name":"李四","identity":"342426********0001","overdue":3,"balance":"1,300.00","rDate":"2017-12-30","rType":"","account":"否"},
+    {"nums":3,"order":"2017101003","name":"张三","identity":"342426********0001","overdue":3,"balance":"1,300.00","rDate":"2017-12-30","rType":"","account":"否"},
+    {"nums":4,"order":"2017101004","name":"李四","identity":"342426********0001","overdue":3,"balance":"1,300.00","rDate":"2017-12-30","rType":"","account":"否"},
+    {"nums":5,"order":"2017101005","name":"张三","identity":"342426********0001","overdue":3,"balance":"1,300.00","rDate":"2017-12-30","rType":"","account":"否"},
+    ],
+    "footer":[
+            {"no":"D002","success":"失败","class":"手机验证","store":"电催作业部","channel":"P22333","content":"#客户姓名#(先生/女士)...","state":"启用","group":"34022319920302043","date":"2017-3-1","rule":"账单日提前10天","sendstate":"正在发送","count":222,"sucsess":2232,"fail":222,"waite":1},
+            {"no":"D003","success":"成功","class":"还款提醒","store":"市场营销部","channel":"P22333","content":"#客户姓名#(先生/女士)...","state":"启用","group":"34022319920302043","date":"2017-3-1","rule":"逾期1天到3天"   ,"sendstate":"正在发送","count":222,"sucsess":22322,"fail":222,"waite":1}
+        
+    ]
+}

@@ -1,0 +1,103 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit|ie-comp|ie-stand">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<LINK rel="Bookmark" href="/favicon.ico" >
+<LINK rel="Shortcut Icon" href="/favicon.ico" />
+<!--[if lt IE 9]>
+<script type="text/javascript" src="lib/html5.js"></script>
+<script type="text/javascript" src="lib/respond.min.js"></script>
+<script type="text/javascript" src="lib/PIE_IE678.js"></script>
+<![endif]-->
+<link rel="stylesheet" type="text/css" href="../static/easyui/easyui.css" />
+<link href="../static/lib/Hui-iconfont/1.0.7/iconfont.css" rel="stylesheet" type="text/css" />
+<link href="../static/lib/iconfont/iconfont.css" rel="stylesheet" type="text/css" />
+<link href="../static/css/public.css" rel="stylesheet" type="text/css" />
+<link href="../static/css/style.css" rel="stylesheet" type="text/css" />
+<link href="../static/css/collect.css" rel="stylesheet" type="text/css" />
+<link href="../static/css/coupon.css" rel="stylesheet" type="text/css" />
+<title>导入文件</title>
+<style>
+body{background-color: #fff;}
+.list-box{width:450px;margin:20px auto;}
+.w250{width:250px!important;}
+/*上传图片*/
+.img-row{overflow: hidden;margin:10px 0}
+.img-row i{float:left;display: inline-block;width:120px;font-style: normal;}
+.input-box{position: relative;overflow: hidden;}
+.input-box .repayPlan:before{
+	position: absolute;
+	left:0;
+	top:0;
+	content: "浏览...";	
+	width:70px;height:25px;line-height:25px;background-color: #15a2dc;
+	border-color: #15a2dc;
+	color:#fff;text-align: center;
+	border-radius: 3px;	
+	cursor: pointer;
+}
+.input-box .repayPlan{height:26px;border-radius:3px;}
+</style>
+</head>
+<body>
+<div class="list-box">
+	<p>
+		<span class="text-box w100"><i>进件编号：</i><input type="text" id="enterNumber" value="" class="w250" readonly="readonly" />
+		</span>
+	</p>
+  <p>
+    <span class="text-box w100"><i>客户姓名：</i><input type="text" id="clientName" value="" class="w250" readonly="readonly"/>
+    </span>
+  </p>
+  <p>
+    <span class="text-box w100"><i>身份证号：</i><input type="text" id="clientId" value="" class="w250" readonly="readonly"/>
+    </span>
+  </p> 
+  <p>
+    <span class="text-box w100"><i>放款日期：</i><input type="text" editable="false" id="loanDate" value="" class="w250 easyui-datebox" />
+    </span>
+  </p>        	
+	<div class="img-row" style="">
+    <i style="">还款计划：</i>
+		<div class="input-box l">
+      <input type="file"  id="repayPlan" class="repayPlan w250"  /> 
+		</div>
+	</div>
+  <input hidden="true" id="leadData" _loanDate="" _repayPlan="" />
+</div>	
+<script type="text/javascript" src="../static/lib/jquery/1.9.1/jquery.min.js"></script> 
+<script type="text/javascript" src="../static/easyui/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="../static/easyui/easyui-lang-zh_CN.js"></script>
+<script type="text/javascript" src="../static/lib/layer/3.0/layer.js"></script>
+<script type="text/javascript" src="../static/js/H-ui.js"></script> 
+<script type="text/javascript" src="../static/js/H-ui.admin.js"></script> 
+<script type="text/javascript">
+  var input = document.getElementById("repayPlan"); 
+  if(typeof FileReader==='undefined'){ 
+      result.innerHTML = "抱歉，你的浏览器不支持 FileReader"; 
+      input.setAttribute('disabled','disabled'); 
+  }else{ 
+      input.addEventListener('change',readFile,false); 
+  } 
+  function readFile(){   
+      var file = this.files[0]; 
+      if(file){
+          var reader = new FileReader(); 
+          var dataUrl = reader.readAsDataURL(file); 
+            console.log(file);
+            var _fileName = file.name;
+            $("#leadData").attr("_repayPlan",_fileName);
+      }
+  }
+    $("#loanDate").datebox({
+       onSelect:function(date){  
+          $("#leadData").attr("_loanDate",date); 
+      }
+    });
+</script>
+</body>
+</html>

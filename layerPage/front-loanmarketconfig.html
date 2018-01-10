@@ -1,0 +1,235 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit|ie-comp|ie-stand">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<LINK rel="Bookmark" href="/favicon.ico" >
+<LINK rel="Shortcut Icon" href="/favicon.ico" />
+<!--[if lt IE 9]>
+<script type="text/javascript" src="lib/html5.js"></script>
+<script type="text/javascript" src="lib/respond.min.js"></script>
+<script type="text/javascript" src="lib/PIE_IE678.js"></script>
+<![endif]-->
+<link rel="stylesheet" type="text/css" href="../static/easyui/easyui.css" />
+<link href="../static/lib/Hui-iconfont/1.0.7/iconfont.css" rel="stylesheet" type="text/css" />
+<link href="../static/lib/iconfont/iconfont.css" rel="stylesheet" type="text/css" />
+<link href="../static/css/public.css" rel="stylesheet" type="text/css" />
+<link href="../static/css/style.css" rel="stylesheet" type="text/css" />
+<link href="../static/css/collect.css" rel="stylesheet" type="text/css" />
+<link href="../static/css/coupon.css" rel="stylesheet" type="text/css" />
+<title>贷款超市-配置</title>
+<style>
+html,body{height:100%;}
+.content{height:85%;overflow: hidden;}
+.content .title{font-size:12px;}
+.checkspan .text-box label{width:120px;margin-right:30px;}
+.w250{width:250px!important;}
+.checkspan input:checked+.icon.radio {
+    background: url(../static/img/radioyes.png) center;
+}
+.checkspan label .icon.radio {
+    background: url(../static/img/radiono.png) center;
+}
+/*上传图片*/
+.img-row{overflow: hidden;margin:10px 0}
+.img-row i{float:left;display: inline-block;width:120px;font-style: normal;}
+.preview{width:260px;height:190px;border:1px solid #000;overflow:hidden;margin:10px 0;}
+.imghead {filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=image);}
+.input-box{position: relative;overflow: hidden;}
+.input-box .addimg:before{
+	position: absolute;
+	left:0;
+	top:0;
+	content: "本地上传";	
+	width:70px;height:25px;line-height:25px;background-color: #15a2dc;
+	border-color: #15a2dc;
+	color:#fff;text-align: center;
+	border-radius: 3px;	
+	cursor: pointer;
+}
+.input-box .addimg{height:26px;border-radius:3px;}
+</style>
+</head>
+<body>
+<div class="content">
+    <div class="title">
+       <span class="title-text positionT2">贷款超市</span>
+       <div class="navbtns">
+            <a id="saveIco" href="javascript:;"><i class="Hui-iconfont">&#xe6a7;</i>&nbsp;保 &nbsp;存 </a>
+            <a id="closeIco" href="javascript:;"><i class="Hui-iconfont">&#xe6a6;</i>&nbsp;取 &nbsp;消</a>
+       </div>             
+    </div>
+	<div class="list-box">
+		<p>
+			<span class="text-box w100"><i>产品名称<strong class="dot">*</strong>：</i><input type="text" value="" class="w250" placeholder="不得超过8个汉字" />
+			</span>
+			</span>
+		</p>	
+		<div class="img-row" style="">
+	       <i style="">图片<strong class="dot">*</strong>：</i>
+			<div class="img-box l" >
+				<div class="input-box"> 
+        <!-- onchange="previewImage(this)" -->
+					<input type="file" accept="image/png,image/gif" id="addimg" class="addimg w250"  /> 
+				</div>
+				<div id="preview" class="preview" >
+					<img id="imghead" class="imghead" width=100% height=auto border=0 src="../static/img/noimage.jpg">
+				</div>
+				<p><strong class="dot">*</strong>提示：仅支持PNG/JPG格式并且图片大小不超过1M，建议上传1450*260像素的图片</p>
+			</div>
+		</div>
+		<p>
+			<span class="text-box w100"><i>通过率<strong class="dot">*</strong>：</i><input type="text" value="" class="w250"  placeholder="0~100" />
+			</span>
+		</p>
+		<p>
+			<span class="text-box w100"><i>展示额度<strong class="dot">*</strong>：</i><input type="text" value="" class="w250" placeholder="0~1000000" />&nbsp;元
+			</span>
+		</p>
+		<p>
+			<span class="text-box w100"><i>一句话简介<strong class="dot">*</strong>：</i><input type="text" value="" class="w250"  placeholder="不得超过20个字符" />
+			</span>
+		</p>				
+		<p>
+			<span class="text-box w100"><i>跳转链接<strong class="dot">*</strong>：</i><input type="text" value="" class="w250" id="convertsrc" placeholder="不得超过200个字符"/>
+			</span>
+		</p>
+		<p class="checkspan">
+		 	<span class="text-box w100" >
+			 	<i>标签<strong class="dot">*</strong>：</i><label><input type="checkbox" checked name="labels" value="" ><i class="icon"></i>实名手机</label>
+			 	<label  class="mt-10"><input type="checkbox" name="labels" value="" ><i class="icon"></i>不查征信</label>
+			 	<label  class="mt-10"><input type="checkbox" name="labels" value="" ><i class="icon"></i>芝麻信用</label>
+			 	<label  class="mt-10"><input type="checkbox" name="labels" value="" ><i class="icon"></i>人脸识别</label>
+			 	<label  class="mt-10"><input type="checkbox" name="labels" value="" ><i class="icon"></i>查公积金</label>			 	
+		 	</span>
+		</p>
+		<p class="checkspan">
+		 	<span class="text-box w100" >
+			 	<i>状态<strong class="dot">*</strong>：</i><label><input type="radio" checked name="refundDate" value="" ><i class="icon radio"></i>启用</label>
+			 	<label  class="mt-10"><input type="radio" name="refundDate" value="" ><i class="icon radio"></i>禁用</label>
+		 	</span>
+		</p>
+
+	</div>	
+</div>
+<script type="text/javascript" src="../static/lib/jquery/1.9.1/jquery.min.js"></script> 
+<script type="text/javascript" src="../static/easyui/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="../static/easyui/easyui-lang-zh_CN.js"></script>
+<script type="text/javascript" src="../static/lib/layer/3.0/layer.js"></script>
+<script type="text/javascript" src="../static/js/H-ui.js"></script> 
+<script type="text/javascript" src="../static/js/H-ui.admin.js"></script> 
+<script type="text/javascript">
+//上传图片   
+  var result = document.getElementById("preview"); 
+  var input = document.getElementById("addimg"); 
+  if(typeof FileReader==='undefined'){ 
+      result.innerHTML = "抱歉，你的浏览器不支持 FileReader"; 
+      input.setAttribute('disabled','disabled'); 
+  }else{ 
+      input.addEventListener('change',readFile,false); 
+  } 
+  function readFile(){ 
+      var MAXWIDTH  = 260; 
+      var MAXHEIGHT = 190;  
+      var file = this.files[0]; 
+      if(file){
+          if(!/image\/\w+/.test(file.type)){ 
+              layer.msg("文件必须为图片！"); 
+              return false; 
+          } 
+          result.innerHTML ='<img id=imghead>';
+          var img = document.getElementById('imghead');
+          img.onload = function(){
+            var rect = clacImgZoomParam(MAXWIDTH, MAXHEIGHT, img.offsetWidth, img.offsetHeight);
+            img.width  =  rect.width;
+            img.height =  rect.height;
+            img.style.marginLeft = rect.left+'px';
+            img.style.marginTop = rect.top+'px';
+          }
+          var reader = new FileReader(); 
+          reader.readAsDataURL(file); 
+          reader.onload = function(e){ 
+              var mb = (e.total/1024)/1024;  
+              if(mb>= 1){  
+                  layer.msg('文件大小不得大于1M');  
+                  return;  
+              }  
+              img.src = e.target.result;
+          }
+          // $.ajax({
+          //   method:"post",
+            // url:,
+          //   data:file,
+          //   dataType:"json",
+          //   success:function(result){
+          //     if(result.success){
+          //        layer.msg("图片上传成功！")
+          //     }else{
+          //        layer.msg("图片上传失败！")
+          //     }
+          //   }
+
+          // })         
+      }
+
+  }
+//让图片自适应
+    function clacImgZoomParam( maxWidth, maxHeight, width, height ){
+        var param = {top:0, left:0, width:width, height:height};
+        if( width>maxWidth || height>maxHeight )
+        {
+            rateWidth = width / maxWidth;
+            rateHeight = height / maxHeight;
+             
+            if( rateWidth > rateHeight )
+            {
+                param.width =  maxWidth;
+                param.height = Math.round(height / rateWidth);
+            }else
+            {
+                param.width = Math.round(width / rateHeight);
+                param.height = maxHeight;
+            }
+        }
+        param.left = Math.round((maxWidth - param.width) / 2);
+        param.top = Math.round((maxHeight - param.height) / 2);
+        return param;
+    }
+    //弹出页 点击关闭。
+   $('#saveIco').on('click', function() {
+      var hasimg = ($("#imghead").attr("src") == "../static/img/noimage.jpg" ) ? true:false;
+      var convertsrc =$("#convertsrc").val();
+      if(hasimg){
+        layer.msg("请上传图片!")
+      }else if(convertsrc == ""){
+        layer.msg("请填写对应的链接!")
+      }else{
+        var aa = parent.$('body iframe');
+        var _index;
+        aa.each(function(index) {
+            if($(this).attr('src') == '../layerPage/front-loanmarketconfig.html?id='){
+            _index = index;
+            }
+        });
+        parent.frames[_index].location.href=parent.frames[_index].location.href;
+        parent.$('#min_title_list').find('.active i').click();        
+      }
+  });   
+   $('#closeIco').on('click', function() {
+      var aa = parent.$('body iframe');
+      var _index;
+      aa.each(function(index) {
+          if($(this).attr('src') == '../layerPage/front-loanmarketconfig.html?id='){
+          _index = index;
+          }
+      });
+      //parent.frames[_index].location.reload();
+      parent.frames[_index].location.href=parent.frames[_index].location.href;
+      parent.$('#min_title_list').find('.active i').click();
+  });
+</script>
+</body>
+</html>

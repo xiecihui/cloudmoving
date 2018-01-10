@@ -1,0 +1,182 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>描述配置</title>
+<link rel="stylesheet" type="text/css" href="../static/easyui/easyui.css" />
+<link rel="stylesheet" type="text/css" href="../static/css/public.css">
+<link rel="stylesheet" type="text/css" href="../static/css/style.css" />
+<link rel="stylesheet" type="text/css" href="../static/lib/Hui-iconfont/1.0.7/iconfont.css" />
+<link rel="stylesheet" type="text/css" href="../static/lib/iconfont/iconfont.css" />
+<link rel="stylesheet" type="text/css" href="../static/css/collect.css">
+<style>
+.datebox{margin-right:16px;}
+.listiconA{margin:0 15px 0 0;}
+</style>
+</head>
+<body>
+<div class="content">
+    <p class="title">描述配置</p>
+    <div class="search-term">
+        <div class="condition perscent80">
+            <input id="clientName" type="text" placeholder="请输入描述名称"/>
+        </div>
+       <div class="navbtns">
+            <a id="Jsarch" href="javascript:;"><i class="Hui-iconfont">&#xe709;</i>&nbsp;查 &nbsp;询 </a>
+       </div>             
+    </div>
+    <!-- table 数据 -->
+    <div class="tableBox">   
+         <table id="listdate"></table>
+    </div>
+</div>
+<script type="text/javascript" src="../static/lib/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="../static/easyui/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="../static/easyui/easyui-lang-zh_CN.js"></script>
+<script type="text/javascript" src="../static/lib/layer/3.0/layer.js"></script>
+<script type="text/javascript" src="../static/js/H-ui.js"></script>
+<script type="text/javascript" src="../static/js/H-ui.admin.js"></script>
+<script type="text/javascript">
+$(function(){
+    var listHeight = $(document).height()-210;
+    function threeDataCont(){
+        /**Name 载入数据*/
+        var IsCheckFlag = true;
+            $('#listdate').datagrid({
+                method:'get',
+                url:"../static/temp/message.json",
+                width:100 + '%',
+                height:listHeight,
+                singleSelect: true,   //多选
+                collapsible:false,     //折叠
+                rownumbers:false,       //行数显示
+                autoRowHeight:true,
+                pageSize:20,
+                pagination:true,        //分页
+                multiSort:true,        //排序
+                fitColumns:false ,// 使列自动展开/收缩到合适的数据表格宽度。
+                scrollbarSize :0,
+                columns:[[
+                { field:'rownumber',title:'序号',width:'5%',
+                     formatter:function(value,rowData,rowIndex){
+                    return rowIndex + 1;
+                     }
+                },
+                { field:'operate',title:'操作',width:'35%',
+                    formatter:function(value,rowData,rowIndex){
+                        var aa = JSON.stringify(rowData);
+                        var liJson = 'liJson';
+                        var lichecked = 'lichecked';
+                        var lithrow = 'lithrow';
+                        var checked;
+                        var tit;
+                        var hide,hideico;
+                        if(rowData.class1 == 1){
+                            checked ='checked=""';
+                            tit='禁用'
+                        }else{
+                            checked ='';
+                            tit='启用'
+                        }
+                        return'<a class="listiconA" datajson=\''+ aa +'\' id=\''+ liJson + rowIndex +'\' href="javascript:;" onclick="bianji(\''  + rowIndex + '\')" > <i class="listicon Hui-iconfont pT1" title="配置">&#xe62e;</i></a>'
+                            +'<input type="checkbox" class="chooseBtn"'+ checked +'  datajson=\''+ aa +'\' id=\''+ lichecked + rowIndex +'\' /><label for="male" class="choose-label " title=\''+ tit +'\'  onclick="fenpei(\'' + lichecked + rowIndex + '\')"></label>'
+                        }
+                },
+                { field:'adname',title:'描述名称',width:'30%',
+                },
+                { field:'status',title:'状态',width:'30%',
+                    formatter:function(value,rowData,rowIndex){
+                        var aa = JSON.stringify(rowData);
+                        if(rowData.class1 == 1){
+                            return '启用'
+                        }else{
+                            return '禁用'
+                        }
+                    }
+                }
+            ]],
+             onClickRow: function (rowIndex, rowData) {
+             },
+             onLoadSuccess: function (data) {
+                 if (!data) { return; }
+             },
+             onDblClickRow: function (rowIndex, rowData) {
+                // detailbtn( rowData.nums+'详情','user-adm-datel.html'+'?id='+ rowData.nums,'100','100');
+             }
+
+        });
+        /*数据条数统计*/
+        $('#listdate').datagrid('getPager').pagination({
+            beforePageText: '第',//页数文本框前显示的汉字
+            afterPageText: '页    共 {pages} 页',
+            displayMsg: '当前显示 {from} - {to} 条记录   共 {total} 条记录',
+        });
+         //编辑
+        window.bianji = function(e){
+            var url = '../layerPage/eloan-descriptionConfig.html'
+            url = url+'?id='+e;
+            $(this).attr({'_href':url,'data-title':'描述配置'+e});
+            Hui_admin_tab(this);
+        } 
+        //启动禁用
+        window.fenpei = function(e){
+            var eBtn = $('#'+ e);
+            var strJSON = $('#'+ e).attr('datajson');
+            //var obj = eval( strJSON);
+            var obj = new Function("return" + strJSON)();
+            var usingArr = [];
+            $.ajax({
+             type: "GET",
+             url:"../static/temp/message.json",
+             async:false,
+             dataType: "json",
+            // data:usingArr;
+             success: function(data){
+                for(i=0;i<data.rows.length;i++){
+                    if(data.rows[i].class1 == 1){
+                        usingArr.push(data.rows[i]);
+
+                    }
+                }
+                console.log(usingArr);
+                if(obj.class1 == 1 &&  usingArr.length ==1){
+                    layer.msg("描述数量不能少于五个!")
+
+                }else if(obj.class1 == 0){
+                     layer.confirm('是否启用？', {
+                      offset: ['30%', '38%'],
+                      btn: ['确认','取消'] //按钮
+                    }, function(){
+                        eBtn.attr('checked','');
+                        usingArr.push(obj);
+                        console.log(usingArr.length);
+                        layer.msg('启用成功！',{offset: ['35%', '42%'],time: 1500});
+                    });
+
+                }else{
+                    layer.confirm('是否禁用？', {
+                      offset: ['30%', '38%'],
+                      btn: ['确认','取消'] //按钮
+                    }, function(){
+                      eBtn.removeAttr('checked');
+                      //$('#listdate').datagrid('reload');
+                      layer.msg('禁用成功！',{offset: ['35%', '42%'],time: 1500});
+                        
+                    });                
+                   
+                }
+
+
+             }
+                
+            })
+
+        }
+
+    }
+    threeDataCont();
+});
+</script>
+
+</body>
+</html>

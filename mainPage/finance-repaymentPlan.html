@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>网信还款计划</title>
+<link rel="stylesheet" type="text/css" href="../static/easyui/easyui.css" />
+<link rel="stylesheet" type="text/css" href="../static/css/public.css">
+<link rel="stylesheet" type="text/css" href="../static/css/style.css" />
+<link rel="stylesheet" type="text/css" href="../static/lib/Hui-iconfont/1.0.7/iconfont.css" />
+
+<link rel="stylesheet" type="text/css" href="../static/lib/iconfont-yd/iconfont.css" />
+<link rel="stylesheet" type="text/css" href="../static/css/collect.css">
+<link rel="stylesheet" type="text/css" href="../static/css/coupon.css">
+<style>
+.datebox{margin-right:16px;}
+.listiconA{margin:0 15px 0 0;border:0;}
+.listicon{
+    font-size:18px !important;
+}
+</style>
+</head>
+<body>
+<div class="content">
+    <p class="title">网信还款计划</p>
+    <div class="search-term">
+        <div class="condition perscent80">
+            <input id="start" type="text" placeholder="请选择统计范围起始日期"  class="easyui-datebox start width185" editable=false/>
+            <input id="" type="text" placeholder="请输入放款审批单号"/>
+            <input id="" type="text" placeholder="请输入客户姓名"/>
+            <input id="" type="text" placeholder="请输入客户身份证号"/>
+            <select name='couponclass' >
+                <option  value="0">代扣还款</option>
+                <option  value="1">代充值还款</option>
+                <option  value="3">代垫还款</option>
+                <option  value="4">网信划扣</option>
+                <option  value="5">全部</option>
+            </select>
+        </div>
+       <div class="navbtns">
+            <a id="Jsarch" href="javascript:;"><i class="Hui-iconfont">&#xe709;</i>&nbsp;查 &nbsp;询 </a>
+       </div>    
+         
+    </div>
+    <!-- table 数据 -->
+    <div class="tableBox">   
+         <table id="listdate"></table>
+    </div>
+</div>
+<script type="text/javascript" src="../static/lib/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="../static/easyui/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="../static/easyui/easyui-lang-zh_CN.js"></script>
+<script type="text/javascript" src="../static/lib/layer/3.0/layer.js"></script>
+<script type="text/javascript" src="../static/js/H-ui.js"></script>
+<script type="text/javascript" src="../static/js/H-ui.admin.js"></script>
+<script type="text/javascript">
+$(function(){
+    var listHeight = $(document).height()-210;
+    function threeDataCont(){
+        /**Name 载入数据*/
+        var IsCheckFlag = true;
+            $('#listdate').datagrid({
+                method:'get',
+                url:"../static/temp/finance-repaymentPlan.json",
+                width:100 + '%',
+                height:listHeight,
+                singleSelect: true,   //多选
+                collapsible:false,     //折叠
+                rownumbers:false,       //行数显示
+                autoRowHeight:true,
+                pageSize:20,
+                pagination:true,        //分页
+                multiSort:true,        //排序
+                fitColumns:false ,// 使列自动展开/收缩到合适的数据表格宽度。
+                scrollbarSize :0,
+                columns:[[
+                { field:'rownumber',title:'序号',width:'5%',
+                     formatter:function(value,rowData,rowIndex){
+                    return rowIndex + 1;
+                     }
+                },
+                { field:'operate',title:'操作',width:'15%',
+                    formatter:function(value,rowData,rowIndex){
+                        var aa = JSON.stringify(rowData);
+                        var liJson = 'liJson';
+                        var lichecked = 'lichecked';
+                        var lithrow = 'lithrow';
+                        return'<a class="listiconA" datajson=\''+ aa +'\' id=\''+ liJson + rowIndex +'\' href="javascript:;" onclick="charge(\'' + liJson + rowIndex + '\')" > <i class="listicon iconfont" title="充值">&#xe667;</i></a>'
+                        +'<a class="listiconA" datajson=\''+ aa +'\' id=\''+ liJson + rowIndex +'\' href="javascript:;" onclick="advance(\'' + liJson + rowIndex + '\')" > <i class="listicon iconfont" title="垫付">&#xe61a;</i></a>'
+                        }
+                },
+                { field:'order',title:'放款审批单号',width:'10%'},
+                { field:'name',title:'客户姓名',width:'10%'},
+                { field:'identity',title:'客户身份证号',width:'10%'},
+                { field:'overdue',title:'历史逾期次数',width:'10%'},
+                { field:'balance',title:'应还款额',width:'10%'},
+                { field:'rDate',title:'还款日期',width:'10%'},
+                { field:'rType',title:'还款类型',width:'10%'},
+                { field:'account',title:'存管账户',width:'10%'}
+            ]],
+             onClickRow: function (rowIndex, rowData) {
+             },
+             onLoadSuccess: function (data) {
+                 if (!data) { return; }
+             },
+             onDblClickRow: function (rowIndex, rowData) {
+             }
+
+        });
+
+        /*查询*/
+        $('#Jsarch').on('click', function(){
+            $('#listdate').datagrid('load',{
+                // sendDate:$('#sendDate').val(),
+                // classify:$('#classify ').val(),
+                // mobanName:$('#mobanName ').val(),
+                // ruleName:$("#ruleName").val()
+            })
+        });
+
+        /*数据条数统计*/
+        $('#listdate').datagrid('getPager').pagination({
+            beforePageText: '第',//页数文本框前显示的汉字
+            afterPageText: '页    共 {pages} 页',
+            displayMsg: '当前显示 {from} - {to} 条记录   共 {total} 条记录',
+        });
+         //刷新
+        window.charge = function(e){
+        } 
+
+        window.advance = function(e){
+        } 
+
+    }
+    threeDataCont();
+
+});
+</script>
+
+</body>
+</html>

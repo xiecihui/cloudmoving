@@ -1,0 +1,200 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit|ie-comp|ie-stand">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<LINK rel="Bookmark" href="/favicon.ico" >
+<LINK rel="Shortcut Icon" href="/favicon.ico" />
+<!--[if lt IE 9]>
+<script type="text/javascript" src="lib/html5.js"></script>
+<script type="text/javascript" src="lib/respond.min.js"></script>
+<script type="text/javascript" src="lib/PIE_IE678.js"></script>
+<![endif]-->
+<link rel="stylesheet" type="text/css" href="../static/easyui/easyui.css" />
+<link href="../static/lib/Hui-iconfont/1.0.7/iconfont.css" rel="stylesheet" type="text/css" />
+<link href="../static/lib/iconfont/iconfont.css" rel="stylesheet" type="text/css" />
+<link href="../static/css/public.css" rel="stylesheet" type="text/css" />
+<link href="../static/css/style.css" rel="stylesheet" type="text/css" />
+<link href="../static/css/collect.css" rel="stylesheet" type="text/css" />
+<link href="../static/css/coupon.css" rel="stylesheet" type="text/css" />
+<title>优惠券列表-编辑</title>
+<style>
+html,body{height:100%;}
+.content{height:85%;overflow: hidden;}
+.content .title{font-size:12px;}
+</style>
+</head>
+<body>
+<div class="content">
+    <div class="title">
+       <span class="title-text positionT2">优惠券列表</span>
+       <div class="navbtns">
+            <a id="saveIco" href="javascript:;"><i class="Hui-iconfont">&#xe6a7;</i>&nbsp;保 &nbsp;存 </a>
+            <a id="closeIco" href="javascript:;"><i class="Hui-iconfont">&#xe6a6;</i>&nbsp;取 &nbsp;消</a>
+       </div>             
+    </div>
+    <div class=" list-box">
+		<p>
+			<span class="text-box"><i>优惠券名称<strong class="dot">*</strong>：</i><input type="text"  id="couponName" value="" />
+			</span>
+			<span class="text-box" ><i >优惠产品<strong class="dot">*</strong>：</i><select name="product"  id="product">
+				<option value="1">闪信贷</option>
+			</select>
+			</span>	
+		</p>
+		<p>
+			<span class="text-box" ><i >优惠券种类<strong class="dot">*</strong>：</i><select name="couponClass" id="couponClass">
+				<option value="1">抵扣券1</option>
+				<option value="2">抵扣券2</option>
+				<option value="3">抵扣券3</option>
+			</select>
+			</span>
+			<span class="text-box"><i>减免金额<strong class="dot">*</strong>：</i><input type="text"  value="" id="mitigate"/>&nbsp;元</span>
+		</p>
+		<p>
+			<span class="text-box"><i>最低金额<strong class="dot">*</strong>：</i>满&nbsp;<input type="text"  id="least" value=""/>&nbsp;元可用</span>
+		</p>
+		<p class="checkspan">
+		 	<span class="text-box w100" >
+			 	<i>发送数量<strong class="dot">*</strong>：</i><label><input type="radio" checked name="quantity" value="" ><i class="icon"></i>不限制</label>
+			 	<br/><i></i><label  class="mt-10"><input type="radio" name="quantity" value="" ><i class="icon"></i><input type="text"/>&nbsp;张</label>
+		 	</span>
+		</p>
+		<p class="checkspan">
+		 	<span class="text-box w100" >
+			 	<i>有效期<strong class="dot">*</strong>：</i><label><input type="radio" checked name="validity" value="" ><i class="icon"></i>固定日期&nbsp;<input type="text" class="easyui-datebox" />&nbsp;~&nbsp;<input type="text" class="easyui-datebox" /></label>
+			 	<br><i></i><label class="mt-10"><input type="radio" name="validity" value="" ><i class="icon"></i>领取后，<select name="effectivedate" id="effectivedate" >
+			 		<option value="0">当天</option>
+			 	</select>&nbsp;生效，有效天数&nbsp;<select name="effectivenumber" id="effectivenumber">
+			 	</select></label>
+		 	</span>
+		</p>
+		<p class="checkspan">
+		 	<span class="text-box w100" ><i>发放方式<strong class="dot">*</strong>：</i><label><input type="radio" checked name="deliverway" value="" ><i class="icon"></i>自动发放，满足条件：<select><option value="0">注册</option><option value="1">首贷</option></select></label><br>
+		 	<i></i><label  class="mt-10"><input type="radio" name="deliverway" value="" ><i class="icon"></i>手动发放</label></span>
+		</p>
+		<p>
+			<span class="text-box"><i>使用限制<strong class="dot">*</strong>：</i><select name="uselimit" id="uselimit"><option value="0">请选择</option><option value="1">可与其他优惠券同时使用</option><option value="2">不能与其他优惠券同时使用</option></select>&nbsp;&nbsp;&nbsp;&nbsp;<input type="text"/>&nbsp;张</span>
+			<span class="text-box hint">（每个用户使用上限，如不填，则默认为1）</span>
+
+		</p>
+		<div class="couponBox clear hide">
+		    <div class="selectBox">
+		        <p class="menu-title">
+		          <select name="couponclass" id="couponclass">
+		          </select>
+		        </p>
+		        <select class="spread-select" multiple="multiple" id="select1">
+		        </select>
+		        
+		    </div>
+		    <div  class="selectBox">
+		          <span class="icons" id="add">添加 >></span> <span class="icons"  id="add_all">全部添加 >></span>
+		          <span class="icons" id="remove">移除 <<</span><span class="icons" id="remove_all">全部移除 <<</span>
+		    </div>
+		    <div class="selectBox">
+		        <select class="spread-select spread-select2" multiple="multiple" id="select2">
+		        </select>
+		    </div>
+		</div>
+		<p>
+			<span class="text-box "><i>领券限制<strong class="dot">*</strong>：</i><input type="text"/>&nbsp;张</span>
+			<span class="text-box hint">（每个用户使用上限，如不填，则默认为1）</span>
+		</p>
+		<p>
+			<span class="text-box w100"><i class="positionT30">使用说明：</i><textarea style="width:450px;height:100px"></textarea></span>
+		</p>
+	</div>	
+</div>
+<script type="text/javascript" src="../static/lib/jquery/1.9.1/jquery.min.js"></script> 
+<script type="text/javascript" src="../static/easyui/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="../static/easyui/easyui-lang-zh_CN.js"></script>
+<script type="text/javascript" src="../static/lib/layer/3.0/layer.js"></script>
+<script type="text/javascript" src="../static/js/H-ui.js"></script> 
+<script type="text/javascript" src="../static/js/H-ui.admin.js"></script>
+<script type="text/javascript" src="../static/js/select-couponclass.js"></script> 
+<script type="text/javascript">
+$(function(){
+	//渲染 有效天数
+	function effectivedate(){
+	  var res ='',res1='';
+	  for (var i = 2; i < 91; i++) {
+	    res +="<option value='"+i+"'>"+"第"+i+"天"+"</option>"
+	  }
+	  $('#effectivedate').append(res);
+	  for (var i = 1; i < 91; i++) {
+	    res1 +="<option value= "+i+">"+i+"天"+"</option>"
+	  }
+	  $('#effectivenumber').append(res1);	 
+	}
+	effectivedate();	
+	//判断渲染数据
+    var index = parent.layer.getFrameIndex(window.name);
+    var url = window.location.href //获取当前URL
+    var param = url.split("?")[1].split("=")[1];//取得参数
+    var coupon = {
+        couponName:$("#couponName").val(),
+        product:$("#product").val(),
+        couponClass:$("#couponClass").val(),
+        mitigate:$("#mitigate").val(),
+        least:$("#least").val()
+    };
+    $.ajax({
+        type:"get",
+        url:"../static/temp/coupon-edit.json",
+        data:coupon,
+        success:function(data){
+          console.log(data)
+          for(var i=0;i<data.lists.length;i++){
+              var id = data.lists[i].id;
+              var couponName=data.lists[i].datainfo.couponName;
+              var product=data.lists[i].datainfo.product;
+              var couponClass=data.lists[i].datainfo.couponClass;
+              var mitigate=data.lists[i].datainfo.mitigate;
+              var least=data.lists[i].datainfo.least;
+              if(param == "liJson"+id){
+                orgadatel();
+                return ;
+              }
+          }
+          function orgadatel(){
+              //渲染值
+              $("#couponName").val(couponName);
+              $("#product").val(product);
+              $("#couponClass").val(couponClass);
+              $("#mitigate").val(mitigate);
+              $("#least").val(least);
+              $("#couponName,#product,#couponClass,#mitigate,#least").attr("disabled","disabled");
+          }
+        }
+    });
+    //弹出页 点击关闭。
+   $('#saveIco,#closeIco').on('click', function() {
+      var aa = parent.$('body iframe');
+      var _index;
+      aa.each(function(index) {
+	      if($(this).attr('src') == '../layerPage/coupon-edit.html?id='+param){
+	      _index = index;
+	      }
+      });
+      //parent.frames[_index].location.reload();
+      parent.frames[_index].location.href=parent.frames[_index].location.href;
+      parent.$('#min_title_list').find('.active i').click();
+  });
+ //点击可与其他优惠券同时使用 触发事件
+  $("#uselimit").change(function(){
+     var checkValue=$("#uselimit").val(); //获取Select选择的Value 
+     if(checkValue == 1){
+        $(".couponBox").show()
+     }else{
+        $(".couponBox").hide()
+     }
+
+  })   
+});
+</script> 
+</body>
+</html>

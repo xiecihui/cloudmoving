@@ -1,0 +1,30 @@
+{
+	"lists": [{
+		"id":0,
+		"datainfo":{
+			"couponName":"新手免息券1",
+			"product":"1",
+			"couponClass":"1",
+			"mitigate":"10",
+			"least":"100"
+		}
+	},{
+		"id":1,
+		"datainfo":{
+			"couponName":"新手免息券2",
+			"product":"1",
+			"couponClass":"2",
+			"mitigate":"20",
+			"least":"200"		}
+	},{
+		"id":2,
+		"datainfo":{
+			"couponName":"新手免息券3",
+			"product":"1",
+			"couponClass":"3",
+			"mitigate":"100",
+			"least":"500"		}
+	}]
+}
+
+

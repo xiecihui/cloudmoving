@@ -1,0 +1,158 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit|ie-comp|ie-stand">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<LINK rel="Bookmark" href="/favicon.ico" >
+<LINK rel="Shortcut Icon" href="/favicon.ico" />
+<!--[if lt IE 9]>
+<script type="text/javascript" src="lib/html5.js"></script>
+<script type="text/javascript" src="lib/respond.min.js"></script>
+<script type="text/javascript" src="lib/PIE_IE678.js"></script>
+<![endif]-->
+<link href="../static/css/H-ui/H-ui.min.css" rel="stylesheet" type="text/css" />
+<link href="../static/css/H-ui/H-ui.admin.css" rel="stylesheet" type="text/css" />
+<link href="../static/lib/Hui-iconfont/1.0.7/iconfont.css" rel="stylesheet" type="text/css" />
+<link href="../static/lib/iconfont/iconfont.css" rel="stylesheet" type="text/css" />
+<link href="../static/css/public.css" rel="stylesheet" type="text/css" />
+<link href="../static/css/style.css" rel="stylesheet" type="text/css" />
+<title>内部预警</title>
+<style>
+.content ul{text-indent: 0; }
+.mr10{margin-right: 10px}
+iframe{height:100%;width:100%;}
+html,body{height:100%;box-sizing:border-box;}
+body{background-color: #f2f2f2;padding: 20px!important;}
+.content{position:relative;padding-left: 130px;box-sizing:border-box;}
+.aside-tab{position:absolute;top:0;left:0;width:130px;max-height:100%;}
+.aside-tab li{
+    height: 38px;
+    line-height: 38px;
+    cursor: pointer;
+    color: #999999;
+    font-size: 12px;
+    text-align: center;
+    background-color: #e3e3e3;
+    border-bottom: 1px solid #d8d9db;
+}
+.aside-tab li.cur{
+    color: #15a2dc;
+    background-color: #fff;
+    border-bottom: 1px solid #15a2dc;   
+}
+.right-show{height:100%;background-color: #fff;padding:20px;box-sizing:border-box;    border-bottom: 2px solid #cdcdcd;}
+.tab-item{height:100%;}
+</style>
+</head>
+<body>
+<div class="error hide">
+404
+</div>
+<div class="content">
+    <ul class="aside-tab" id="aside-tab">
+        <li data-url='mainPage/coupon-list.html'>中新余额</li>
+        <li data-url='mainPage/coupon-list.html'>网信余额</li>
+        <li data-url='mainPage/activity-list.html'>注册量</li>
+        <li data-url='mainPage/activity-list.html'>进件量</li>
+        <li data-url='mainPage/activity-list.html'>放款成功率</li>
+        <li data-url='mainPage/activity-list.html'>放款达成率</li>
+        <li data-url=''>整体通过率</li>
+        <li data-url='mainPage/activity-list.html'>申请转化率</li>
+        <li data-url='mainPage/coupon-list.html'>贷后催回率</li>
+        <li data-url='mainPage/coupon-list.html'>信审积压量</li>
+        <li data-url='mainPage/coupon-list.html'>待放款件数</li>
+        <li data-url='mainPage/coupon-list.html'>待风控件数</li>
+    </ul>
+    <div class="right-show" id="right-show">
+        <div id="" class="tab-item">
+       <!--      <div  class="loading"></div> -->
+            <iframe id="iframe" name="iframe-layer" class="setting-child" scrolling="yes" frameborder="0" src="setting-child0.html"></iframe> 
+        </div>
+    </div>
+    <input type="hidden" id="datainput"  isclick="no" formArry=""/>
+</div>
+<script type="text/javascript" src="../static/lib/jquery/1.9.1/jquery.min.js"></script> 
+<script type="text/javascript" src="../static/js/H-ui.js"></script> 
+<script type="text/javascript" src="../static/js/H-ui.admin.js"></script> 
+<script type="text/javascript" src="../static/js/nicescroll.js"></script>
+<script type="text/javascript" src="../static/lib/layer/3.0/layer.js"></script>
+<script type="text/javascript">
+$(function(){
+    //漂亮滚动条
+    function scroll(){
+        $('#aside-tab').niceScroll({
+            cursorcolor: "#ccc",//#CC0071 光标颜色
+            cursoropacitymax: .5, //改变不透明度非常光标处于活动状态（scrollabar“可见”状态），范围从1到0
+            touchbehavior: false, //使光标拖动滚动像在台式电脑触摸设备
+            cursorwidth: "5px", //像素光标的宽度
+            cursorborder: "0", //   游标边框css定义
+            cursorborderradius: "5px",//以像素为光标边界半径
+            autohidemode: true //是否隐藏滚动条
+        });
+    }
+    scroll();
+    function initMenuList(){
+        var menuListCache = sessionStorage.getItem('menuList');
+        var sourceData = menuListCache && JSON.parse(menuListCache);
+        if(!menuListCache){
+            //需去再请求一次接口，或者退出登录
+        }
+
+        var menuLength = $('#aside-tab li');
+        for(var i=0; i<sourceData.length; i++){
+            for(var j=0; j<menuLength.length;j++){
+                if(sourceData[i] == $(menuLength[j]).data('url')){
+                    menuLength[j].style.display  = 'block';
+                    $(menuLength[j]).addClass("block");           
+                }else{
+                    menuLength[j].style.display  = 'none';
+                    $(menuLength[j]).removeClass("block");
+                }
+            }
+        }
+        $('#aside-tab li.block:first').addClass('cur');
+        var num=$('#aside-tab li.block:first').index();
+        var _src = "setting-child"+num+".html";
+        if(num >= 0){
+            // $('.tab-item')[num].style.display  = 'block';
+            $('.tab-item iframe').attr("src",_src);
+        }
+        $('.tab-item iframe').attr("src",_src);
+        // $('.tab-item')[num].style.display  = 'block';
+    }
+    initMenuList();
+    //tab切换
+     //var $frame = $(window.frames['iframe-layer'].document);
+     // $("#iframe").contents().find
+    $('#aside-tab').on('click','li',function(){
+        var _index = $(this).index(),
+            isclick = $("#datainput").attr("isclick"),
+            formArry = $("#datainput").attr("formArry"),
+            _this = $(this);
+        function tabswitch(){
+             _this.addClass("cur").siblings().removeClass("cur");
+            var _src = "setting-child"+_index+".html";
+            $('.tab-item iframe').attr("src",_src);            
+        }
+        if(isclick=="no" && formArry!==""){
+            layer.confirm('系统可能不会保存您所做的修改,确定离开吗？', {
+              btn: ['确定','取消'] //按钮
+            }, function(){
+                tabswitch()
+                layer.closeAll()
+            }, function(){
+            });
+        }else{
+            tabswitch()             
+        }
+        $("#datainput").attr({"isclick":"no","formArry":""})    
+    })
+
+
+});
+</script> 
+</body>
+</html>

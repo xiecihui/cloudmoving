@@ -1,0 +1,200 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit|ie-comp|ie-stand">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<LINK rel="Bookmark" href="/favicon.ico" >
+<LINK rel="Shortcut Icon" href="/favicon.ico" />
+<!--[if lt IE 9]>
+<script type="text/javascript" src="lib/html5.js"></script>
+<script type="text/javascript" src="lib/respond.min.js"></script>
+<script type="text/javascript" src="lib/PIE_IE678.js"></script>
+<![endif]-->
+<link href="static/css/H-ui/H-ui.min.css" rel="stylesheet" type="text/css" />
+<link href="static/css/H-ui/H-ui.admin.css" rel="stylesheet" type="text/css" />
+<link href="static/lib/Hui-iconfont/1.0.7/iconfont.css" rel="stylesheet" type="text/css" />
+<link href="static/lib/iconfont/iconfont.css" rel="stylesheet" type="text/css" />
+<link href="static/css/style.css" rel="stylesheet" type="text/css" />
+<title>云动 · 运营支撑系统</title>
+<style>
+.scrollBar{ width: 10px; position: absolute;z-index:999; top: 0; right:5px; background: #000;}
+</style>
+</head>
+<body>
+<header class="Hui-header cl"> <a class="Hui-logo l" title="Trustrock" href="/"><img src="static/img/log.png" alt=""></a><span class="Hui-subtitle l">云动 · 运营支撑系统</span>
+    <ul class="Hui-userbar">
+        <li>系统管理员</li>
+<!--        <li class="dropDown dropDown_hover"><a href="#" class="dropDown_A">admin <i class="Hui-iconfont">&#xe6d5;</i></a>
+            <ul class="dropDown-menu radius box-shadow">
+                <li><a href="#">个人信息</a></li>
+            </ul>
+        </li> -->
+        <li><a _href="modify-pwd.html" class="password" href="modify-pwd.html" data-title="修改密码">修改密码</a></li>
+        <li><a class="goback" href="javascript:;">退出</a></li>
+    </ul>
+    <a href="javascript:;" class="Hui-nav-toggle Hui-iconfont" aria-hidden="false">&#xe667;</a> </header>
+<aside class="Hui-aside scrollBox" >
+    <div class="scrollBar"></div>
+    <div class="menu_dropdown bk_2">
+        <dl id="finance-route">
+            <dt class="cur"><i class="Hui-iconfont titicon">&#xe627;</i> 财务 <i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+            <dd>
+                <ul>
+                    <li><a _href="mainPage/finance-repaymentPlan.html" data-title="网信还款计划" href="javascript:void(0)">网信还款计划</a></li>
+                </ul>
+            </dd>
+        </dl>
+        <dl id="coupon-manage">
+            <dt><i class="iconfont titicon">&#xe612;</i> 优惠券管理 <i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+            <dd>
+                <ul>
+                    <li><a _href="mainPage/coupon-list.html" data-title="优惠券列表" href="javascript:void(0)">优惠券列表</a></li>
+                    <li><a _href="mainPage/coupon-statistics.html" data-title="优惠券统计" href="javascript:void(0)">优惠券统计</a></li>
+                    <li><a _href="mainPage/coupon-class.html" data-title="优惠券种类" href="javascript:void(0)">优惠券种类</a></li>
+                </ul>
+            </dd>
+        </dl>
+        <dl id="activity-manage">
+            <dt><i class="iconfont titicon">&#xe619;</i> 活动管理 <i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+            <dd>
+                <ul>
+                    <li><a _href="mainPage/activity-list.html" data-title="活动列表" href="javascript:void(0)">活动列表</a></li>
+<!--                     <li><a _href="mainPage/activity-list.html" data-title="活动统计" href="javascript:void(0)">活动统计</a></li> -->
+                </ul>
+            </dd>
+        </dl>
+        <dl id="front-manage">
+            <dt><i class="Hui-iconfont titicon">&#xe63c;</i> 前端管理 <i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+            <dd>
+                <ul>
+                    <li><a _href="mainPage/front-layerconfigmain.html" data-title="弹窗配置" href="javascript:void(0)">弹窗配置</a></li>
+                    <li><a _href="mainPage/front-loanmarket.html" data-title="贷款超市" href="javascript:void(0)">贷款超市</a></li>
+                </ul>
+            </dd>
+        </dl>
+
+        <dl id="channel-route">
+            <dt><i class="iconfont titicon">&#xe6d4;</i> 渠道路由 <i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+            <dd>
+                <ul>
+                    <li><a _href="mainPage/channel-balance.html" data-title="渠道余额" href="javascript:void(0)">渠道余额</a></li>
+                    <li><a _href="mainPage/channel-deploymain.html" data-title="渠道配置" href="javascript:void(0)">渠道配置</a></li>
+                    <li><a _href="mainPage/channel-ruleEngine.html" data-title="规则引擎" href="javascript:void(0)">规则引擎</a></li>
+                    <li><a _href="mainPage/channel-otherRule.html" data-title="例外规则" href="javascript:void(0)">例外规则</a></li>
+                </ul>
+            </dd>
+        </dl>
+        <dl id="setting-route">
+            <dt><i class="Hui-iconfont titicon">&#xe62e;</i> 系统设置 <i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+            <dd>
+                <ul>
+                    <li><a _href="mainPage/setting-index.html" data-title="内部预警" href="javascript:void(0)">内部预警</a></li>
+                </ul>
+            </dd>
+        </dl>
+        <dl id="more-money">
+            <dt><i class="Hui-iconfont titicon">&#xe63a;</i> 钱多啦 <i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+            <dd>
+                <ul>
+                    <li><a _href="mainPage/money-repayPlan.html" data-title="还款计划" href="javascript:void(0)">还款计划</a></li>
+                   <li><a _href="mainPage/money-superscript.html" data-title="上标信息" href="javascript:void(0)">上标信息</a></li>                    
+                </ul>
+            </dd>
+        </dl>
+         <dl id="more-money">
+            <dt><i class="Hui-iconfont titicon">&#xe628;</i> 悠融e贷 <i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+            <dd>
+                <ul>
+                    <li><a _href="mainPage/eloan-ad.html" data-title="广告配置" href="javascript:void(0)">广告配置</a></li>
+                   <li><a _href="mainPage/eloan-description.html" data-title="描述配置" href="javascript:void(0)">描述配置</a></li> 
+                   <li><a _href="mainPage/eloan-product.html" data-title="产品配置" href="javascript:void(0)">产品配置</a></li>                   
+                </ul>
+            </dd>
+        </dl>       
+    </div>
+</aside>
+<div class="dislpayArrow hide"><a class="pngfix" href="javascript:void(0);" onClick="displaynavbar(this)"></a></div>
+<section class="Hui-article-box">
+    <div id="Hui-tabNav" class="Hui-tabNav">
+        <div class="Hui-tabNav-wp">
+            <ul id="min_title_list" class="acrossTab cl">
+                <li class="active"><span title="我的桌面" data-href="welcome.html">我的桌面</span><em></em></li>
+            </ul>
+        </div>
+        <div class="Hui-tabNav-more btn-group"><a id="js-tabNav-prev" class="btn radius btn-default size-S" href="javascript:;"><i class="Hui-iconfont">&#xe6d4;</i></a><a id="js-tabNav-next" class="btn radius btn-default size-S" href="javascript:;"><i class="Hui-iconfont">&#xe6d7;</i></a></div>
+    </div>
+    <div id="iframe_box" class="Hui-article">
+        <div class="show_iframe">
+            <div style="display:none" class="loading"></div>
+            <iframe scrolling="yes" frameborder="0" src="welcome.html"></iframe>
+        </div>
+    </div>
+</section>
+<script type="text/javascript" src="static/lib/jquery/1.9.1/jquery.min.js"></script> 
+<script type="text/javascript" src="static/lib/layer/3.0/layer.js"></script>
+<script type="text/javascript" src="static/js/H-ui.js"></script> 
+<script type="text/javascript" src="static/js/H-ui.admin.js"></script> 
+<script type="text/javascript" src="static/js/nicescroll.js"></script>
+<script type="text/javascript">
+$(function(){
+    function getUsrMenuList(){
+        var urlList = ['mainPage/activity-list.html','mainPage/coupon-list.html'];
+        sessionStorage.setItem('menuList',JSON.stringify(urlList));
+
+        $.ajax({
+            url:"getpremissionUrl.html",
+            success:function(result){
+                var urlList = JSON.parse(result);
+                var aList = window.document.getElementsByName("control");
+                var flag = true;
+                for(var i = 0;i<aList.length;i++){
+                    flag = true;
+                    for(var j = 0;j<urlList.length;j++){
+                        if (aList[i].id==urlList[j]) {
+                            flag = false;
+                            continue;
+                        }
+                    }
+                    if (flag) {
+                        aList[i].style.display = "none";
+                    }
+                }
+        }});
+    }
+    //漂亮滚动条
+    function scroll(){
+        $('.scrollBox').niceScroll({
+            cursorcolor: "#ccc",//#CC0071 光标颜色
+            cursoropacitymax: .5, //改变不透明度非常光标处于活动状态（scrollabar“可见”状态），范围从1到0
+            touchbehavior: false, //使光标拖动滚动像在台式电脑触摸设备
+            cursorwidth: "5px", //像素光标的宽度
+            cursorborder: "0", //   游标边框css定义
+            cursorborderradius: "5px",//以像素为光标边界半径
+            autohidemode: false //是否隐藏滚动条
+        });
+    }
+    scroll();
+
+    function init(){
+        //修改密码
+        $(".password").on("click",function(){
+            Hui_admin_tab(this);
+        });
+        //侧边栏切换
+        $(".menu_dropdown dl dt").click(function(){
+            $(this).addClass("cur").parent("dl").siblings("dl").children("dt").removeClass("cur")
+        })
+        $(".Hui-aside .menu_dropdown li").click(function(){
+            $(this).addClass("cur").siblings().removeClass("cur")
+        }) 
+    }
+    init();
+    getUsrMenuList();
+
+});
+</script> 
+</body>
+</html>

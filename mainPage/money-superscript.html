@@ -1,0 +1,126 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>上标信息</title>
+<link rel="stylesheet" type="text/css" href="../static/easyui/easyui.css" />
+<link rel="stylesheet" type="text/css" href="../static/css/public.css">
+<link rel="stylesheet" type="text/css" href="../static/css/style.css" />
+<link rel="stylesheet" type="text/css" href="../static/lib/Hui-iconfont/1.0.7/iconfont.css" />
+<link rel="stylesheet" type="text/css" href="../static/lib/iconfont/iconfont.css" />
+<link rel="stylesheet" type="text/css" href="../static/css/collect.css">
+<style>
+.datebox{margin-right:16px;}
+.listiconA{margin:0 15px 0 0;}
+.bordernone{border:none}
+.hide,.hideico{display: none}
+</style>
+</head>
+<body>
+<div class="content">
+    <p class="title">规则引擎</p>
+    <div class="search-term">
+        <div class="condition perscent80">
+            <input id="" type="text" placeholder="请输入客户姓名"/>
+            <input id="" type="text" placeholder="请输入手机号码"/>
+            <input id="" type="text" placeholder="请输入身份证号"/>
+        </div>
+       <div class="navbtns">
+            <a id="Jsarch" href="javascript:;"><i class="Hui-iconfont">&#xe709;</i>&nbsp;查 &nbsp;询 </a>
+            <a id="Export" href="javascript:;"><i class="Hui-iconfont">&#xe641;</i>&nbsp;导 &nbsp;出 </a>
+       </div>             
+    </div>
+    <!-- table 数据 -->
+    <div class="tableBox">   
+         <table id="listdate"></table>
+    </div>
+</div>
+<script type="text/javascript" src="../static/lib/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="../static/easyui/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="../static/easyui/easyui-lang-zh_CN.js"></script>
+<script type="text/javascript" src="../static/lib/layer/3.0/layer.js"></script>
+<script type="text/javascript" src="../static/js/H-ui.js"></script>
+<script type="text/javascript" src="../static/js/H-ui.admin.js"></script>
+<script type="text/javascript">
+$(function(){
+    var listHeight = $(document).height()-210;
+    function threeDataCont(){
+        /**Name 载入数据*/
+        var IsCheckFlag = true;
+            $('#listdate').datagrid({
+                method:'get',
+                url:"../static/temp/message.json",
+                width:100 + '%',
+                height:listHeight,
+                singleSelect: true,   //多选
+                collapsible:false,     //折叠
+                rownumbers:false,       //行数显示
+                autoRowHeight:true,
+                pageSize:20,
+                pagination:true,        //分页
+                multiSort:true,        //排序
+                fitColumns:false ,// 使列自动展开/收缩到合适的数据表格宽度。
+                scrollbarSize :0,
+                columns:[[
+                { field:'rownumber',title:'序号',width:'5%',
+                     formatter:function(value,rowData,rowIndex){
+                    return rowIndex + 1;
+                     }
+                },
+                { field:'CouponName',title:'所在省市',width:'14%'},
+                { field:'CouponClass',title:'审批时间',width:'12%'},
+                { field:'product',title:'进件编号',width:'16%'},
+                { field:'sendtype',title:'借款人姓名',width:'10%'},
+                { field:'validity',title:'借款人手机号',width:'12%'},
+                { field:'repertory',title:'借款人身份证',width:'14%'},
+                { field:'status',title:'银行卡',width:'18%'},
+                { field:'CouponNamea',title:'银行卡预留手机号',width:'12%'},
+                { field:'CouponClassa',title:'借款金额',width:'10%'},
+                { field:'producta',title:'借款用途',width:'10%'},
+                { field:'sendtypea',title:'借款期限',width:'10%'},
+                { field:'validitya',title:'借款利率',width:'8%'},
+                { field:'repertorya',title:'咨询费',width:'8%'},
+                { field:'statusa',title:'平台费',width:'8%'},
+                { field:'CouponNamec',title:'单位名称',width:'14%'},
+                { field:'CouponClassc',title:'单位地址',width:'14%'},
+                { field:'productc',title:'单位电话',width:'10%'},
+                { field:'sendtypec',title:'职位',width:'10%'},
+                { field:'validityc',title:'所属行业',width:'10%'},
+                { field:'repertoryc',title:'工作年限',width:'8%'},
+                { field:'statusc',title:'月均收入',width:'8%'},
+                { field:'CouponNamee',title:'公司性质',width:'12%'},
+                { field:'CouponClasse',title:'户籍所在地',width:'12%'},
+                { field:'producte',title:'婚姻状况',width:'12%'}
+            ]],
+             onClickRow: function (rowIndex, rowData) {
+             },
+             onLoadSuccess: function (data) {
+                 if (!data) { return; }
+             },
+             onDblClickRow: function (rowIndex, rowData) {
+                // detailbtn( rowData.nums+'详情','user-adm-datel.html'+'?id='+ rowData.nums,'100','100');
+             }
+
+        });
+
+        /*查询*/
+        $('#Jsarch').on('click', function(){
+            $('#listdate').datagrid('load',{
+                //
+            })
+        });
+
+        /*数据条数统计*/
+        $('#listdate').datagrid('getPager').pagination({
+            beforePageText: '第',//页数文本框前显示的汉字
+            afterPageText: '页    共 {pages} 页',
+            displayMsg: '当前显示 {from} - {to} 条记录   共 {total} 条记录',
+        });
+    }
+    threeDataCont();
+
+});
+</script>
+
+</body>
+</html>

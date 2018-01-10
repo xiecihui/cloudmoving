@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>渠道余额</title>
+<link rel="stylesheet" type="text/css" href="../static/easyui/easyui.css" />
+<link rel="stylesheet" type="text/css" href="../static/css/public.css">
+<link rel="stylesheet" type="text/css" href="../static/css/style.css" />
+<link rel="stylesheet" type="text/css" href="../static/lib/Hui-iconfont/1.0.7/iconfont.css" />
+<link rel="stylesheet" type="text/css" href="../static/lib/iconfont/iconfont.css" />
+<link rel="stylesheet" type="text/css" href="../static/css/collect.css">
+<link rel="stylesheet" type="text/css" href="../static/css/coupon.css">
+<style>
+.datebox{margin-right:16px;}
+.listiconA{margin:0 15px 0 0;}
+</style>
+</head>
+<body>
+<div class="content">
+    <p class="title">渠道余额</p>
+    <div class="search-term">
+        <div class="condition perscent80">
+            <input id="" type="text" placeholder="请输入渠道名称"/>
+        </div>
+       <div class="navbtns">
+            <a id="Jsarch" href="javascript:;"><i class="Hui-iconfont">&#xe709;</i>&nbsp;查 &nbsp;询 </a>
+       </div>             
+    </div>
+    <!-- table 数据 -->
+    <div class="tableBox">   
+         <table id="listdate"></table>
+    </div>
+</div>
+<script type="text/javascript" src="../static/lib/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="../static/easyui/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="../static/easyui/easyui-lang-zh_CN.js"></script>
+<script type="text/javascript" src="../static/lib/layer/3.0/layer.js"></script>
+<script type="text/javascript" src="../static/js/H-ui.js"></script>
+<script type="text/javascript" src="../static/js/H-ui.admin.js"></script>
+<script type="text/javascript">
+$(function(){
+    var listHeight = $(document).height()-210;
+    function threeDataCont(){
+        /**Name 载入数据*/
+        var IsCheckFlag = true;
+            $('#listdate').datagrid({
+                method:'get',
+                url:"../static/temp/channel-balance.json",
+                width:100 + '%',
+                height:listHeight,
+                singleSelect: true,   //多选
+                collapsible:false,     //折叠
+                rownumbers:false,       //行数显示
+                autoRowHeight:true,
+                pageSize:20,
+                pagination:true,        //分页
+                multiSort:true,        //排序
+                fitColumns:false ,// 使列自动展开/收缩到合适的数据表格宽度。
+                scrollbarSize :0,
+                columns:[[
+                { field:'rownumber',title:'序号',width:'5%',
+                     formatter:function(value,rowData,rowIndex){
+                    return rowIndex + 1;
+                     }
+                },
+                { field:'operate',title:'操作',width:'35%',
+                    formatter:function(value,rowData,rowIndex){
+                        var aa = JSON.stringify(rowData);
+                        var liJson = 'liJson';
+                        var lichecked = 'lichecked';
+                        var lithrow = 'lithrow';
+                        var checked;
+                        var tit;
+                        var hide,hideico;
+                        return'<a class="listiconA" datajson=\''+ aa +'\' id=\''+ liJson + rowIndex +'\' href="javascript:;" onclick="refresh(\'' + liJson + rowIndex + '\')" > <i class="listicon iconfont" title="刷新">&#xe64b;</i></a>'
+                        }
+                },
+                { field:'channelName',title:'渠道名称',width:'30%'},
+                { field:'balance',title:'实时余额(元)',width:'30%'
+                    // ,formatter:function(value,rowData,rowIndex){
+                    //     var aa = JSON.stringify(rowData);
+                    //     return rowData.balance;
+                    // }
+                }
+            ]],
+             onClickRow: function (rowIndex, rowData) {
+             },
+             onLoadSuccess: function (data) {
+                 if (!data) { return; }
+             },
+             onDblClickRow: function (rowIndex, rowData) {
+             }
+
+        });
+
+        /*查询*/
+        $('#Jsarch').on('click', function(){
+            $('#listdate').datagrid('load',{
+                // sendDate:$('#sendDate').val(),
+                // classify:$('#classify ').val(),
+                // mobanName:$('#mobanName ').val(),
+                // ruleName:$("#ruleName").val()
+            })
+        });
+
+        /*数据条数统计*/
+        $('#listdate').datagrid('getPager').pagination({
+            beforePageText: '第',//页数文本框前显示的汉字
+            afterPageText: '页    共 {pages} 页',
+            displayMsg: '当前显示 {from} - {to} 条记录   共 {total} 条记录',
+        });
+         //刷新
+        window.refresh = function(e){
+            // var url = '../layerPage/channel-addrule.html'
+            // url = url+'?id=';//+e  
+            // $(this).attr({'_href':url,'data-title':'例外规则'+e});
+            // Hui_admin_tab(this);
+            var data={
+                'id':'1'
+            }
+            $.ajax({
+                method:'get',
+                url:"../static/temp/channel-balance.json",
+                success:function(){
+                    
+                }
+            })
+        } 
+
+    }
+    threeDataCont();
+
+});
+</script>
+
+</body>
+</html>

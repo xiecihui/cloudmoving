@@ -1,0 +1,189 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>优惠券种类</title>
+<link rel="stylesheet" type="text/css" href="../static/easyui/easyui.css" />
+<link rel="stylesheet" type="text/css" href="../static/css/public.css">
+<link rel="stylesheet" type="text/css" href="../static/css/style.css" />
+<link rel="stylesheet" type="text/css" href="../static/lib/Hui-iconfont/1.0.7/iconfont.css" />
+<link rel="stylesheet" type="text/css" href="../static/lib/iconfont/iconfont.css" />
+<link rel="stylesheet" type="text/css" href="../static/css/collect.css">
+<style>
+.datebox{margin-right:16px;}
+.listiconA{margin:0 15px 0 0;}
+</style>
+</head>
+<body>
+<div class="content">
+    <p class="title">优惠券种类</p>
+    <div class="search-term">
+        <div class="condition perscent80">
+            <input id="" type="text" placeholder="请输入优惠券种类名称"/>
+        </div>
+       <div class="navbtns">
+            <a id="Jsarch" href="javascript:;"><i class="Hui-iconfont">&#xe709;</i>&nbsp;查 &nbsp;询 </a>
+            <a id="addState" href="javascript:;"><i class="Hui-iconfont">&#xe600;</i>添加种类</a>
+       </div>             
+    </div>
+    <!-- table 数据 -->
+    <div class="tableBox">   
+         <table id="listdate"></table>
+    </div>
+</div>
+<script type="text/javascript" src="../static/lib/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="../static/easyui/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="../static/easyui/easyui-lang-zh_CN.js"></script>
+<script type="text/javascript" src="../static/lib/layer/3.0/layer.js"></script>
+<script type="text/javascript" src="../static/js/H-ui.js"></script>
+<script type="text/javascript" src="../static/js/H-ui.admin.js"></script>
+<script type="text/javascript">
+$(function(){
+    var listHeight = $(document).height()-210;
+    function threeDataCont(){
+        /**Name 载入数据*/
+        var IsCheckFlag = true;
+            $('#listdate').datagrid({
+                method:'get',
+                url:"../static/temp/message.json",
+                width:100 + '%',
+                height:listHeight,
+                singleSelect: true,   //多选
+                collapsible:false,     //折叠
+                rownumbers:false,       //行数显示
+                autoRowHeight:true,
+                pageSize:20,
+                pagination:true,        //分页
+                multiSort:true,        //排序
+                fitColumns:false ,// 使列自动展开/收缩到合适的数据表格宽度。
+                scrollbarSize :0,
+                columns:[[
+                { field:'rownumber',title:'序号',width:'5%',
+                     formatter:function(value,rowData,rowIndex){
+                    return rowIndex + 1;
+                     }
+                },
+                { field:'operate',title:'操作',width:'32%',
+                    formatter:function(value,rowData,rowIndex){
+                        var aa = JSON.stringify(rowData);
+                        var liJson = 'liJson';
+                        var checked;
+                        var tit;
+                        if(rowData.class1 == 1){
+                            checked ='checked=""';
+                            tit='禁用'
+                        }else{
+                            checked ='';
+                            tit='启用'
+                        }
+                        return '<input type="checkbox" class="chooseBtn"'+ checked +'  datajson=\''+ aa +'\' id=\''+ liJson + rowIndex +'\' /><label for="male" class="choose-label" title=\''+ tit +'\'  onclick="fenpei(\'' + liJson + rowIndex + '\')"></label>'
+                        }
+                },
+                { field:'CouponClass',title:'优惠种类',width:'33%'},
+                { field:'status',title:'状态',width:'30%',
+                    formatter:function(value,rowData,rowIndex){
+                        var aa = JSON.stringify(rowData);
+                        if(rowData.class1 == 1){
+                            return '启用'
+                        }else{
+                            return '禁用'
+                        }
+                    }
+                }
+            ]],
+             onClickRow: function (rowIndex, rowData) {
+             },
+             onLoadSuccess: function (data) {
+                 if (!data) { return; }
+             },
+             onDblClickRow: function (rowIndex, rowData) {
+                // detailbtn( rowData.nums+'详情','user-adm-datel.html'+'?id='+ rowData.nums,'100','100');
+             }
+
+        });
+
+        /*查询*/
+        $('#Jsarch').on('click', function(){
+            $('#listdate').datagrid('load',{
+                sendDate:$('#sendDate').val(),
+                classify:$('#classify ').val(),
+                mobanName:$('#mobanName ').val(),
+                ruleName:$("#ruleName").val()
+            })
+        });
+
+        /*数据条数统计*/
+        $('#listdate').datagrid('getPager').pagination({
+            beforePageText: '第',//页数文本框前显示的汉字
+            afterPageText: '页    共 {pages} 页',
+            displayMsg: '当前显示 {from} - {to} 条记录   共 {total} 条记录',
+        });
+         //编辑
+        window.bianji = function(e){
+            var url = '../layerPage/coupon-edit.html'
+            url = url+'?id='+e;
+            $(this).attr({'_href':url,'data-title':'优惠券列表编辑'+e});
+            Hui_admin_tab(this);
+        }       
+        //启动禁用
+        window.fenpei = function(e){
+            var eBtn = $('#'+ e);
+            var strJSON = $('#'+ e).attr('datajson');
+            //var obj = eval( strJSON);
+            var obj = new Function("return" + strJSON)();
+
+            if(obj.class1 != 1){
+                layer.confirm('是否启用？', {
+                  offset: ['30%', '38%'],
+                  btn: ['确认','取消'] //按钮
+                }, function(){
+                    // $.ajax({
+                    //     url: 'xx',
+                    //     type: 'post',
+                    //     dataType: 'json',
+                    //     data: {param1: 'value1'},
+                    // })
+                    // .done(function(data) {
+                        eBtn.attr('checked','');
+                        //$('#listdate').datagrid('reload');
+                        layer.msg('启用成功！',{offset: ['35%', '42%'],time: 1500});
+                    // })
+                });
+            }else{
+                layer.confirm('是否禁用？', {
+                  offset: ['30%', '38%'],
+                  btn: ['确认','取消'] //按钮
+                }, function(){
+                    // $.ajax({
+                    //     url: 'xx',
+                    //     type: 'post',
+                    //     dataType: 'json',
+                    //     data: {param1: 'value1'},
+                    // })
+                    // .done(function(data) {
+                        eBtn.removeAttr('checked');
+                        //$('#listdate').datagrid('reload');
+                        layer.msg('禁用成功！',{offset: ['35%', '42%'],time: 1500});
+                    // })
+                });
+            }
+
+        }
+
+    }
+    threeDataCont();
+
+    $('#addState').on('click',function(){
+        detailbtn('添加','../layerPage/coupon-addclass.html' ,'500px','250px',['保 存','关 闭'],function(layero, index){
+
+        },function(index,layero){
+            layer.close(index)
+        });
+
+    });
+
+});
+</script>
+
+</body>
+</html>

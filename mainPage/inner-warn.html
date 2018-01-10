@@ -1,0 +1,180 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit|ie-comp|ie-stand">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<LINK rel="Bookmark" href="/favicon.ico" >
+<LINK rel="Shortcut Icon" href="/favicon.ico" />
+<!--[if lt IE 9]>
+<script type="text/javascript" src="lib/html5.js"></script>
+<script type="text/javascript" src="lib/respond.min.js"></script>
+<script type="text/javascript" src="lib/PIE_IE678.js"></script>
+<![endif]-->
+<link href="../static/css/H-ui/H-ui.min.css" rel="stylesheet" type="text/css" />
+<link href="../static/css/H-ui/H-ui.admin.css" rel="stylesheet" type="text/css" />
+<link href="../static/lib/Hui-iconfont/1.0.7/iconfont.css" rel="stylesheet" type="text/css" />
+<link href="../static/lib/iconfont/iconfont.css" rel="stylesheet" type="text/css" />
+<link href="../static/css/public.css" rel="stylesheet" type="text/css" />
+<link href="../static/css/style.css" rel="stylesheet" type="text/css" />
+<title>内部预警</title>
+<style>
+.content ul{text-indent: 0; }
+.pt30{position: relative;top:-30px;}
+.mr10{margin-right: 10px}
+html,body{height:100%;box-sizing:border-box;}
+body{background-color: #f2f2f2;padding: 20px!important;}
+.content{position:relative;padding-left: 130px;box-sizing:border-box;}
+.aside-tab{position:absolute;top:0;left:0;width:130px;max-height:100%;}
+.aside-tab li{
+    height: 38px;
+    line-height: 38px;
+    cursor: pointer;
+    color: #999999;
+    font-size: 12px;
+    text-align: center;
+    background-color: #e3e3e3;
+    border-bottom: 1px solid #d8d9db;
+}
+.aside-tab li.cur{
+    color: #15a2dc;
+    background-color: #fff;
+    border-bottom: 1px solid #15a2dc;   
+}
+.right-show{height:100%;background-color: #fff;padding:20px;box-sizing:border-box;    border-bottom: 2px solid #cdcdcd;}
+.right-show .tit{padding-bottom: 10px;border-bottom: 1px solid #c6c6c6}
+.right-show .tit h2{
+    height:24px;
+    line-height: 24px;
+    padding-left: 20px;
+    border-left: 2px solid #15a2dc;
+    color: #515974;
+    font-size: 14px;
+}
+.show-box{font-size: 12px;margin-top:20px;}
+.row-wrap{margin-bottom: 15px}
+.row-wrap span{display: inline-block;width:120px;}
+.row-wrap select,.row-wrap input{
+    width:80px;height: 24px;
+    border: 1px solid #d3d3d3;
+    border-radius: 3px;box-sizing:border-box;
+
+}
+.row-wrap select{position: relative;top:2px;}
+.row-wrap textarea{width:300px;height:80px;border: 1px solid #d3d3d3;
+    border-radius: 3px;box-sizing:border-box;}
+</style>
+</head>
+<body>
+<div class="content">
+    <ul class="aside-tab" id="aside-tab">
+        <li class="cur">中新余额</li>
+        <li>网信余额</li>
+        <li>注册量</li>
+        <li>进件量</li>
+        <li>放款成功率</li>
+        <li>放款达成率</li>
+        <li>整体通过率</li>
+        <li>申请转化率</li>
+        <li>贷后催回率</li>
+        <li>信审积压量</li>
+        <li>待放款件数</li>
+        <li>待风控件数</li>
+    </ul>
+    <div class="right-show" id="right-show">
+        <div class="tit"><h2>中新余额</h2></div>
+        <div class="show-box">
+            <div class="row-wrap">
+                <span>阈值:</span>
+                <select name="start" id="start" >
+                </select>
+                 -
+                <select class="mr10" name="end"  id="end">
+                </select>
+                <select name="equal" >
+                    <option value="0">低于</option>
+                    <option value="1">高于</option>
+                </select>                                 
+                <input type="text" value="" /><em id="symbol"> 元</em>
+                <i>+</i>
+
+            </div>
+            <div class="row-wrap">
+                <span class="pt30">邮件预警:</span>
+                <textarea>
+                    hanyu@socian.com.cn,
+                    chengchao@socian.com.cn,
+                </textarea>
+            </div>
+            <div class="row-wrap">
+                <span class="pt30">短信预警:</span>
+                <textarea>
+                    13888888888,
+                    13888888888
+                </textarea>
+            </div>
+            <div class="row-wrap">
+                <span>备注:</span>邮件及手机号码之间通过,进行分隔
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="../static/lib/jquery/1.9.1/jquery.min.js"></script> 
+<script type="text/javascript" src="../static/js/H-ui.js"></script> 
+<script type="text/javascript" src="../static/js/H-ui.admin.js"></script> 
+<script type="text/javascript">
+$(function(){
+    //select加时间点
+    function dayhours(){
+         var _str;
+        for(i = 0;i<=24;i++){
+            _str +="<option value="+i+">"+i +"点"+"</option>";
+        }
+        $("#start,#end").append(_str);       
+    }
+    dayhours()
+    $('#aside-tab').on('click','li',function(){
+        var _this = $(this).index();
+        var _txt= $(this).text();
+        $("#right-show h2").text(_txt);
+        $(this).addClass("cur").siblings().removeClass("cur");
+        switch (_this)
+        {
+        case 0:
+          $("#symbol").text(" 元 ");
+          break;
+        case 1:
+         $("#symbol").text(" 元 ");
+          break;
+        case 2:
+          $("#symbol").text(" ");
+          break;
+        case 3: 
+          $("#symbol").text(" % ");
+          break;
+        case 4:
+         
+          break;
+        case 5:
+        
+          break;
+        case 6:
+         
+          break;
+        case 7:
+         
+          break;
+        case 8:
+         
+          break;          
+        }
+    })
+    $("#iframe_box .show_iframe iframe").on('load',function(){
+        $(this).siblings(".loading").hide()
+    }) 
+});
+</script> 
+</body>
+</html>

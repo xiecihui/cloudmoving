@@ -1,0 +1,134 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>优惠券统计</title>
+<link rel="stylesheet" type="text/css" href="../static/easyui/easyui.css" />
+<link rel="stylesheet" type="text/css" href="../static/css/public.css">
+<link rel="stylesheet" type="text/css" href="../static/css/style.css" />
+<link rel="stylesheet" type="text/css" href="../static/lib/Hui-iconfont/1.0.7/iconfont.css" />
+<link rel="stylesheet" type="text/css" href="../static/lib/iconfont/iconfont.css" />
+<link rel="stylesheet" type="text/css" href="../static/css/collect.css">
+<style>
+.datebox{margin-right:16px;}
+.width185{width:185px!important;}
+</style>
+</head>
+<body>
+<div class="content">
+    <p class="title">优惠券统计</p>
+    <div class="search-term">
+        <div class="condition">
+                <input id="start" type="text" placeholder="请选择统计范围起始日期"  class="easyui-datebox start width185" editable=false/>
+                <input id="end" type="text" placeholder="请选择统计范围结束日期"  class="easyui-datebox end width185" editable=false/>
+                <select name='' id="">
+                    <option  value="0">抵扣券</option>
+                </select>
+                <input id="" type="text" placeholder="请输入优惠券名称"/>
+                <select name='' id="">
+                    <option  value="0">自动发放</option>
+                </select>
+        </div>
+       <div class="navbtns">
+            <a id="Jsarch" href="javascript:;"><i class="Hui-iconfont">&#xe709;</i>&nbsp;查 &nbsp;询 </a>
+       </div>             
+    </div>
+    <!-- table 数据 -->
+    <div class="tableBox">   
+         <table id="listdate"></table>
+    </div>
+</div>
+<script type="text/javascript" src="../static/lib/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="../static/easyui/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="../static/easyui/easyui-lang-zh_CN.js"></script>
+<script type="text/javascript" src="../static/lib/layer/3.0/layer.js"></script>
+<script type="text/javascript" src="../static/js/H-ui.js"></script>
+<script type="text/javascript" src="../static/js/H-ui.admin.js"></script>
+<script type="text/javascript">
+$(function(){
+    $('.start').datebox('textbox').attr('placeholder', '请选择统计范围起始日期');
+    $('.end').datebox('textbox').attr('placeholder', '请选择统计范围结束日期');
+    var listHeight = $(document).height()-250;
+    function threeDataCont(){
+        /**Name 载入数据*/
+        var IsCheckFlag = true;
+            $('#listdate').datagrid({
+                method:'get',
+                url:"../static/temp/message.json",
+                width:100 + '%',
+                height:listHeight,
+                singleSelect: true,   //多选
+                collapsible:false,     //折叠
+                rownumbers:false,       //行数显示
+                autoRowHeight:true,
+                pageSize:20,
+                pagination:true,        //分页
+                multiSort:true,        //排序
+                fitColumns:false ,// 使列自动展开/收缩到合适的数据表格宽度。
+                scrollbarSize :0,
+                columns:[[
+                { field:'rownumber',title:'序号',width:'5%',
+                     formatter:function(value,rowData,rowIndex){
+                    return rowIndex + 1;
+                     }
+                },
+                { field:'timeHorizon',title:'统计范围',width:'15%'
+                },
+                { field:'CouponName',title:'优惠券名称',width:'12%'},
+                { field:'CouponClass',title:'优惠券种类',width:'12%'},
+                { field:'product',title:'优惠产品',width:'12%'},
+                { field:'sendtype',title:'发放方式',width:'11%'},
+                { field:'getNumber',title:'领取/发放次数',width:'11%'},
+                { field:'useNumber',title:'使用次数',width:'11%'},
+                { field:'cancelNumber',title:'核销次数',width:'11%'}
+            ]],
+             onClickRow: function (rowIndex, rowData) {
+             },
+             onLoadSuccess: function (data) {
+                 if (!data) { return; }
+                 $.ajax({
+                     type: "GET",
+                     url: "../static/temp/dynamic.json",
+                     async:false,
+                     dataType: "json",
+                     success: function(data){
+                        for(var i=0;i<data.limits[0].hideColumn.length;i++){
+                           console.log(data.limits[0].hideColumn[i])
+                           $("#listdate").datagrid("hideColumn", data.limits[0].hideColumn[i]);
+
+                        }
+                     }
+                 })
+                 // $("#dg").datagrid("hideColumn", "title");
+             },
+             onDblClickRow: function (rowIndex, rowData) {
+                // detailbtn( rowData.nums+'详情','user-adm-datel.html'+'?id='+ rowData.nums,'100','100');
+             }
+
+        });
+
+        /*查询*/
+        $('#Jsarch').on('click', function(){
+            $('#listdate').datagrid('load',{
+                sendDate:$('#sendDate').val(),
+                classify:$('#classify ').val(),
+                mobanName:$('#mobanName ').val(),
+                ruleName:$("#ruleName").val()
+            })
+        });
+
+        /*数据条数统计*/
+        $('#listdate').datagrid('getPager').pagination({
+            beforePageText: '第',//页数文本框前显示的汉字
+            afterPageText: '页    共 {pages} 页',
+            displayMsg: '当前显示 {from} - {to} 条记录   共 {total} 条记录',
+        });
+
+    }
+    threeDataCont();
+
+});
+</script>
+
+</body>
+</html>

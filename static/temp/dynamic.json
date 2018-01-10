@@ -1,0 +1,12 @@
+{
+    "limits": [{
+        "id": 0,
+        "hideColumn": ["product", "sendtype"]
+    }, {
+        "id": 1,
+        "hideColumn": ["getNumber", "useNumber"]
+    }, {
+        "id": 2,
+        "hideColumn": ["cancelNumber"]
+    }]
+}

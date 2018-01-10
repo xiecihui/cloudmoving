@@ -1,0 +1,225 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>云动运营支撑系统修改密码页</title>
+<link href="static/css/login.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<div class="login-box" id="demo">
+   <div class="input-content">
+     <div class="login_tit">
+          <div>
+            <i class="tit-bg left"></i>
+            云动 · 运营支撑系统
+            <i class="tit-bg right"></i>
+          </div>
+          <p>cloud&nbsp;&nbsp;&nbsp;&nbsp;moving</p>
+     </div> 
+     <p class="p opwd_icon">
+       <input type="text" placeholder="原密码" id="loginId" autocomplete="off" class="login_txtbx">
+     </p> 
+     <p class="p npwd_icon">
+       <input type="text" placeholder="新密码" id="passWord" oncontextmenu="return false" onpaste="return false" class="login_txtbx">
+     </p>     	
+      <p class="p rpwd_icon">
+       <input type="text" placeholder="确认密码" id="passWord1" oncontextmenu="return false" onpaste="return false" class="login_txtbx">
+     </p>
+      <div class="passwordTit">
+        <i class="border left"></i>
+        <i class="border right"></i>
+        注意：密码长度为6~12位 , 密码需包含字母、数字、特殊字符，字母大小写均可特殊符号包括以下符号!@#$%^&*()_+,.- 
+      </div>
+      <div class="signup">
+      	  <a class="gv" id="loginIn" href="javascript:;" >确&nbsp;&nbsp;认</a>
+          <a class="gv" id="clear" href="javascript:;">取&nbsp;&nbsp;消</a>
+     </div>
+  </div>
+  <div class="canvaszz"> </div>
+  <canvas id="canvas"></canvas> 
+</div>
+<script type="text/javascript" src="static/lib/jquery/1.9.1/jquery.min.js"></script> 
+<script type="text/javascript" src="static/lib/layer/3.0/layer.js"></script>
+<script>
+//校验
+$(function(){
+    // if (window != top){
+    //     top.location.href = location.href; 
+    // }
+    var timenow = new Date().getTime();
+    $('#image').attr('src', '/validateCode.do?date=' + timenow);
+     
+    $("body").keydown(function() {
+        if (event.keyCode == "13") {//keyCode=13是回车键
+            $("#loginIn").click();
+        }
+    }); 
+    $('#clear').click(function(e) {
+        $("#loginId").val('');
+        $("#passWord").val('');
+        $("#passWord1").val('');
+    });
+    $("#loginIn").click(function() {
+        var _login = $("#loginId").val();
+        var _password =$("#passWord").val();
+        var _password1 =$("#passWord1").val();
+        var data = {                        
+                userid:_login,
+                password:_password,
+                password1:_password1
+            };
+
+        if(_login == ""){
+            layer.msg("请输入原密码!");
+            return;
+        }
+        if(_password1 == '' || _password == ''){
+            layer.msg("请输入新密码!");
+            return;
+        }
+        if(_password1 != _password){
+            layer.msg("两次密码不一样！");
+            return;
+        }
+        //密码正则
+        if(!(/^(?![a-zA-z]+$)(?!\d+$)(?![!@#$%^&*()_+,.-]+$)(?![a-zA-z\d]+$)(?![a-zA-z!@#$%^&*()_+,.-]+$)(?![\d!@#$%^&*()_+,.-]+$)[a-zA-Z\d!@#$%^&*()_+,.-]+$/.test(_password))){ 
+          layer.msg("输入密码不符规则!!!");
+          return;
+        }
+        $.ajax({
+            type : "POST",
+            url : "/dologin.do",
+            data : {
+                loginJsonStr : JSON.stringify(data)
+            },
+            async : true,
+            beforeSend : function()
+            {   
+                //触发ajax请求开始时执行
+                $('#loginIn').val('确认中...').attr('href', '#').css("cursor", "default");//改变提交按钮上的文字并将按钮设置为不可点击
+            },
+            success : function(resultMsg) {
+                if("success" == resultMsg){
+                    location.href="/main.html";
+                }else{
+                    layer.msg(resultMsg);
+                }
+            },
+            error : function(XMLHttpRequest, textStatus, errorThrown) {
+                layer.msg("error!");
+            },
+            complete : function(){
+                //ajax请求完成时执行 
+                $('#loginIn').val('登录').attr('href', 'javascript:;').css("cursor", "pointer");;//改变提交按钮上的文字并将按钮设置为可以点击 
+            } 
+        });
+    }); 
+//宇宙特效
+"use strict";
+var canvas = document.getElementById('canvas'),
+  ctx = canvas.getContext('2d'),
+  w = canvas.width = window.innerWidth,
+  h = canvas.height = window.innerHeight,
+
+  hue = 217,
+  stars = [],
+  count = 0,
+  maxStars = 1300;//星星数量
+
+var canvas2 = document.createElement('canvas'),
+  ctx2 = canvas2.getContext('2d');
+canvas2.width = 100;
+canvas2.height = 100;
+var half = canvas2.width / 2,
+  gradient2 = ctx2.createRadialGradient(half, half, 0, half, half, half);
+gradient2.addColorStop(0.025, '#CCC');
+gradient2.addColorStop(0.1, 'hsl(' + hue + ', 61%, 33%)');
+gradient2.addColorStop(0.25, 'hsl(' + hue + ', 64%, 6%)');
+gradient2.addColorStop(1, 'transparent');
+
+ctx2.fillStyle = gradient2;
+ctx2.beginPath();
+ctx2.arc(half, half, half, 0, Math.PI * 2);
+ctx2.fill();
+
+// End cache
+
+function random(min, max) {
+  if (arguments.length < 2) {
+    max = min;
+    min = 0;
+  }
+
+  if (min > max) {
+    var hold = max;
+    max = min;
+    min = hold;
+  }
+
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+function maxOrbit(x, y) {
+  var max = Math.max(x, y),
+    diameter = Math.round(Math.sqrt(max * max + max * max));
+  return diameter / 2;
+  //星星移动范围，值越大范围越小，
+}
+
+var Star = function() {
+
+  this.orbitRadius = random(maxOrbit(w, h));
+  this.radius = random(60, this.orbitRadius) / 18; 
+  //星星大小
+  this.orbitX = w / 2;
+  this.orbitY = h / 2;
+  this.timePassed = random(0, maxStars);
+  this.speed = random(this.orbitRadius) / 500000; 
+  //星星移动速度
+  this.alpha = random(2, 10) / 10;
+
+  count++;
+  stars[count] = this;
+}
+
+Star.prototype.draw = function() {
+  var x = Math.sin(this.timePassed) * this.orbitRadius + this.orbitX,
+    y = Math.cos(this.timePassed) * this.orbitRadius + this.orbitY,
+    twinkle = random(10);
+
+  if (twinkle === 1 && this.alpha > 0) {
+    this.alpha -= 0.05;
+  } else if (twinkle === 2 && this.alpha < 1) {
+    this.alpha += 0.05;
+  }
+
+  ctx.globalAlpha = this.alpha;
+  ctx.drawImage(canvas2, x - this.radius / 2, y - this.radius / 2, this.radius, this.radius);
+  this.timePassed += this.speed;
+}
+
+for (var i = 0; i < maxStars; i++) {
+  new Star();
+}
+
+function animation() {
+  ctx.globalCompositeOperation = 'source-over';
+  ctx.globalAlpha = 0.5; //尾巴
+  ctx.fillStyle = 'hsla(' + hue + ', 64%, 6%, 2)';
+  ctx.fillRect(0, 0, w, h)
+
+  ctx.globalCompositeOperation = 'lighter';
+  for (var i = 1, l = stars.length; i < l; i++) {
+    stars[i].draw();
+  };
+
+  window.requestAnimationFrame(animation);
+}
+
+animation();
+})
+</script>
+
+</body>
+</html>

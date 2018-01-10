@@ -1,0 +1,186 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit|ie-comp|ie-stand">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<LINK rel="Bookmark" href="/favicon.ico" >
+<LINK rel="Shortcut Icon" href="/favicon.ico" />
+<!--[if lt IE 9]>
+<script type="text/javascript" src="lib/html5.js"></script>
+<script type="text/javascript" src="lib/respond.min.js"></script>
+<script type="text/javascript" src="lib/PIE_IE678.js"></script>
+<![endif]-->
+<link href="../static/css/H-ui/H-ui.min.css" rel="stylesheet" type="text/css" />
+<link href="../static/css/H-ui/H-ui.admin.css" rel="stylesheet" type="text/css" />
+<link href="../static/lib/Hui-iconfont/1.0.7/iconfont.css" rel="stylesheet" type="text/css" />
+<link href="../static/lib/iconfont/iconfont.css" rel="stylesheet" type="text/css" />
+<link href="../static/css/public.css" rel="stylesheet" type="text/css" />
+<link href="../static/css/style.css" rel="stylesheet" type="text/css" />
+<title>中新余额</title>
+<style>
+html,body{height:100%;}
+.content{position: relative;height:100%;box-sizing:border-box;}
+.content ul{text-indent: 0; }
+.mr10{margin-right: 10px}
+.tit{padding-bottom: 10px;border-bottom: 1px solid #c6c6c6}
+.tit h2{
+height:24px;
+line-height: 24px;
+padding-left: 20px;
+border-left: 2px solid #15a2dc;
+color: #515974;
+font-size: 14px;
+}
+.show-box{height:75%;font-size: 12px;margin-top:20px;overflow:auto}
+.row-wrap{overflow:hidden;margin-bottom: 10px}
+.row-wrap span{display: inline-block;width:120px;float:left;}
+.row-wrap select,.row-wrap input{
+    width:80px;height: 24px;
+    border: 1px solid #d3d3d3;
+    border-radius: 3px;box-sizing:border-box;
+
+}
+.row-wrap select{position: relative;top:2px;}
+.row-wrap textarea{float:left;width:300px;height:80px;border: 1px solid #d3d3d3;
+    border-radius: 3px;box-sizing:border-box;}
+button{border:0;outline: none;}
+.row-wrap section:last-child{padding-bottom:10px;}
+.iconBtn{position:relative;font-size: 14px;border-radius: 5px;border:1px solid #ccc;padding:5px 15px 5px 25px;}
+.iconBtn i{position: absolute;left:10px;}
+.del,.add{font-size:22px;margin-left: 10px;color:#15a2dc;transition:all 4s}
+.del:hover,.add:hover,.btn-div .save:hover{opacity: .8;}
+.add{float: left;position: relative;top:-8px;}
+.btn-div {position:absolute;bottom:10px;left:0;width:100%;text-align: center }
+.btn-div .save{
+     display: inline-block;
+    height: 25px;
+    line-height: 25px;
+    text-align: center;
+    background-color: #15a2dc;
+    border-color: #15a2dc;
+    color: #fff;
+    border-radius: 3px;
+    padding: 0 20px;   
+    font-size: 12px;  
+    cursor: pointer;  
+}
+
+</style>
+</head>
+<body>
+<div id="" class="content">
+    <div class="tit" id="aa"><h2>中新余额</h2></div>
+    <div class="show-box">
+        <div class="row-wrap">
+            <span>阈值:</span>
+            <div id="fazhi" style="width:400px; float: left">
+                <section >
+                    <select name="start"  ></select> 
+                    - 
+                    <select class="mr10" name="end" ></select>
+                    <select name="equal" >
+                        <option value="0">低于</option>
+                        <option value="1">高于</option>
+                    </select>                                 
+                    <input type="text" class="money" name="money"  value=""  /><em> 元</em>
+                </section>
+            </div>
+            <a id="addBtn"  class="add"><i class="Hui-iconfont">&#xe604;</i></a>
+                <!-- <a id="delBtn">删除</a> -->
+           
+        </div>
+        <div class="row-wrap" >
+            <span>邮件预警:</span>
+            <textarea id="email" name="email" ></textarea>
+        </div>
+        <div class="row-wrap">
+            <span>短信预警:</span>
+            <textarea id="message" name="message" ></textarea>
+        </div>
+        <div class="row-wrap">
+            <span>备注:</span>邮件及手机号码之间通过,进行分隔
+        </div>
+    </div>
+    <div class="btn-div"><button class="save" id="save" >保  存</button></div>
+</div>
+<script type="text/javascript" src="../static/lib/jquery/1.9.1/jquery.min.js"></script> 
+<script type="text/javascript" src="../static/js/H-ui.js"></script> 
+<script type="text/javascript" src="../static/js/H-ui.admin.js"></script> 
+<script type="text/javascript">
+$(function(){
+    //select加时间点
+    function dayhours(){
+         var _str;
+        for(i = 0;i<=24;i++){
+            _str +="<option value="+i+">"+i +"点"+"</option>";
+        }
+        $("[name='start'],[name='end']").append(_str);       
+    }
+    dayhours()
+    $('#addBtn').on('click',function(){
+        var text='<section>'
+        +    '<select name="start"  ></select>' 
+        +    ' - '   
+        +    '<select class="mr10" name="end"></select>'
+        +    ' <select name="equal" >'
+        +        '<option value="0">低于</option>'
+        +        '<option value="1">高于</option>'
+        +    '</select> '                                
+        +   '<input type="text" value=""  class="money" /><em > 元</em>'
+        +   '<a class="del" onclick="delTr(this)" ><i class="Hui-iconfont">&#xe6e2;</i></a>'
+        +   '</section>';
+        // if($("#fazhi section").length<2){
+            $(text).appendTo($('#fazhi'));
+        // }else{return false}
+        dayhours()
+    })
+
+    window.delTr = function(section){
+        $(section).parent().remove();
+    }
+    $('#save').on('click',function(){
+        $("#datainput", parent.document).attr("isclick","yes")
+        //获得表单信息
+        //  var   thresholdArr=[];
+        // $("#fazhi section").each(function(){
+        //    var _start = $(this).find("[name='start']").val(),
+        //        _end =  $(this).find("[name='end']").val(),
+        //        _equal =  $(this).find("[name='equal']").val(),
+        //        _money =  $(this).find(".money").val();
+        //     var threshold = {
+        //         "start":_start,
+        //         "end":_end,
+        //         "equal":_equal,
+        //         "money":_money,
+        //     } 
+        //     thresholdArr.push(threshold)           
+        // })
+        //     console.log(thresholdArr)      
+        // var _email =$("#email").val();
+        // var _message =$("#message").val();
+        // var formdata = {
+        //     "index":0,
+        //     "datas":[_email,_message]
+        // } ;  
+        // sessionStorage.setItem('formlist',JSON.stringify(formdata));
+        //判断是否点击按钮
+        // $("#datainput").attr("_isclick","yes");
+        // console.log($("#datainput").attr("_isclick"))
+        // sessionStorage.setItem('isclick',JSON.stringify(isclick));
+
+    })
+    
+});
+//判断是否编辑了表单
+$("input,select,textarea").each(function(){
+    $(this).change(function(){
+        var value = $(this).val();
+        $("#datainput", parent.document).attr("formArry",value)
+    })
+})
+</script> 
+</body>
+</html>

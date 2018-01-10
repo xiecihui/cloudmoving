@@ -1,0 +1,46 @@
+{
+    "lists": [
+    {
+        "id":0,
+        "datainfo":{
+            "groupname":"信审中心",
+            "groupnum":"11",
+            "groupchief":"3",
+            "groupstate":"0",
+            "groupnote":"无",
+            "notetaker":"无",
+            "notetime":"无",
+            "lastnotetaker":"无",
+            "lastnotetime":"无"
+        }
+    },{
+        "id":1,
+        "datainfo":{
+            "groupname":"大数据",
+            "groupnum":"12",
+            "groupchief":"3",
+            "groupstate":"1",
+            "groupnote":"无",
+            "notetaker":"无",
+            "notetime":"无",
+            "lastnotetaker":"无",
+            "lastnotetime":"无"
+        }
+    },{
+        "id":2,
+        "datainfo":{
+            "groupname":"网点授信部",
+            "groupnum":"13",
+            "groupchief":"3",
+            "groupstate":"1",
+            "groupnote":"无",
+            "notetaker":"无",
+            "notetime":"无",
+            "lastnotetaker":"无",
+            "lastnotetime":"无"
+        }
+    }
+ ]
+}
+
+

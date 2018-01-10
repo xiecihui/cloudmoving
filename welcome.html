@@ -1,0 +1,177 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>欢迎页</title>
+<link rel="stylesheet" type="text/css" href="static/easyui/easyui.css" />
+<link rel="stylesheet" type="text/css" href="static/css/public.css">
+<link rel="stylesheet" type="text/css" href="static/css/style.css" />
+<link rel="stylesheet" type="text/css" href="static/lib/Hui-iconfont/1.0.7/iconfont.css" />
+<link rel="stylesheet" type="text/css" href="static/css/collect.css">
+</head>
+<body>
+<div class="datarea">
+    <p class="title reference">优惠券趋势图
+        <span class="dateArea r">
+            <input id="" type="text" class="easyui-datebox start" editable=false/>&nbsp;至&nbsp;
+            <input id="" type="text" class="easyui-datebox end" editable=false/>
+        </span>
+
+    </p>
+    <div id="electric" style="width: 1100px;height:450px;"></div>
+</div>
+<script type="text/javascript" src="static/lib/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="static/easyui/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="static/easyui/easyui-lang-zh_CN.js"></script>
+<script type="text/javascript" src="static/js/echarts.min.js"></script>
+<script>
+$(function(){
+        
+//每日电催量
+      function mychartElectric(){
+           var electric = echarts.init(document.getElementById('electric'));
+                // 指定图表的配置项和数据
+                // 指定图表的配置项和数据
+           option = {
+                    tooltip : {
+                        trigger: 'axis',
+                        axisPointer: {
+                                type: 'cross',
+                                label: {
+                                    backgroundColor: '#6a7985'
+                                }
+                            }
+                    },
+                    legend: {
+                        data:['核销次数','使用人数','领取人数']
+                    },
+                    toolbox: {
+                        show : true
+                    },
+                    calculable : true,
+                    grid: {
+                            left: '3%',
+                            right: '4%',
+                            bottom: '3%',
+                            containLabel: true
+                        },
+                    xAxis : [
+                        {
+                            splitLine:{
+                            　　　　show:false,
+                                    lineStyle:{
+                                        color:['#e2e7eb']
+                                     }
+                            　　},
+                            type : 'category',
+                            boundaryGap : false,
+                            data :  function (){
+                                        var list = [];
+                                        for (var i = 1; i <= 24; i++) {
+                                            list.push( i);
+                                        }
+                                        return list;
+                                     }(),
+                                     axisLabel: {  
+                                             interval:0,  
+                                             // rotate:40  
+                                          }
+                        }
+                    ],
+                    yAxis : [
+                        {
+                            splitLine:{
+                            　　　　show:false,
+                                     lineStyle:{
+                                        color:['#e2e7eb']
+                                     }
+                            　　},
+                                type : 'value',
+                                min: 0,
+                                max: 35,
+                                interval: 5,
+                        },
+                    ],
+                    series : [
+                        {   
+                            itemStyle: {
+                                      normal: {
+                                          color: '#0c7cc8',
+                                      }
+                                  },
+                            name:'核销次数',
+                            type:'line',
+                            // areaStyle: {
+                            //             normal: {
+                            //                 color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                            //                     offset: 1,
+                            //                     color: '#fff'
+                            //                 },{
+                            //                     offset: 0,
+                            //                     color: '#26a0f2'
+                            //                 }])
+                            //             }
+                            //         },
+                            data:[2, 5, 20, 15, 30, 20, 15, 30, 10, 20, 25, 20, 15, 18, 1, 25, 25, 2, 15, 22, 12, 25, 25, 20]
+                        },
+                        {
+                            itemStyle: {
+                                      normal: {
+                                          color: '#0c7cc8',
+                                            lineStyle:{
+                                                width:2,
+                                                type:'dotted'  //'dotted'虚线 'solid'实线
+                                            }
+                                      }
+                                  },
+                            name:'使用人数',
+                            type:'line',
+                            // areaStyle: {
+                            //             normal: {
+                            //                 color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                            //                     offset: 1,
+                            //                     color: '#fff'
+                            //                 },{
+                            //                     offset: 0,
+                            //                     color: '#f54320'
+                            //                 }])
+                            //             }
+                            //         },
+                            data:[20, 15, 18, 1, 25, 25, 2, 15, 22, 12, 2, 5, 20, 15, 30, 20, 15, 30, 10, 20, 25, 25, 25, 20]
+                        },
+                        {
+                            itemStyle: {
+                                      normal: {
+                                          color: '#0c7cc8',
+                                            lineStyle:{
+                                                width:2,
+                                                type:'dashed'  //'dotted'虚线 'solid'实线
+                                            }
+
+                                      }
+                                  },
+                            name:'领取人数',
+                            type:'line',
+                            // areaStyle: {
+                            //             normal: {
+                            //                 color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                            //                     offset: 1,
+                            //                     color: '#fff'
+                            //                 },{
+                            //                     offset: 0,
+                            //                     color: '#FD8943'
+                            //                 }])
+                            //             }
+                            //         },
+                            data:[25,  20, 15, 21, 30, 13, 26, 27,15, 18, 1, 25, 25,8, 15, 22, 12, 2, 5, 20, 15, 30, 20, 15]
+                        }                        
+                    ]
+                };
+            // 使用刚指定的配置项和数据显示图表。
+            electric.setOption(option);
+      }mychartElectric();
+
+  })
+</script>
+</body>
+</html>
